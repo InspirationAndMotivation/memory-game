@@ -22,9 +22,7 @@ const Card = (props: {
         initial={{ scale: 0 }}
         animate={{ scale: 0.95, transition: { delay: 0.4, type: 'spring' } }}
       >
-        {flipped && (
-          <img className="Card-Front" src={card.image} alt="Card Front"></img>
-        )}
+        <img className="Card-Front" src={card.image} alt="Card Front"></img>
 
         <img
           className="Card-Back"
