@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ICard } from './interfaces/ICard';
 import Card from './components/Card/Card';
+import { AnimatePresence } from 'framer-motion';
 import './App.scss';
 
 const App = () => {
@@ -42,13 +43,17 @@ const App = () => {
   const nextTurn = () => {
     setFirstChoice(null);
     setSecondChoice(null);
-    setTurns((prevTurn) => prevTurn++);
+    setTurns((prevTurn) => prevTurn + 1);
     setIsDisabled(false);
   };
 
   const isFlipped = (card: ICard) => {
     return card === firstChoice || card === secondChoice || card.matched;
   };
+
+  useEffect(() => {
+    shuffleCards();
+  }, []);
 
   useEffect(() => {
     // Compare cards and if they matched - set matched property into true
@@ -76,21 +81,28 @@ const App = () => {
         <button className="Start-Button" onClick={shuffleCards}>
           Start
         </button>
+        {turns > 0 ? (
+          <p className="Turns-Count">Turn: {turns}</p>
+        ) : (
+          <p className="Tip">Pick your first pair of cards!</p>
+        )}
       </header>
       <div className="Game-Canvas">
         <div className="Cards-Grid">
-          {cards &&
-            cards.map((card: ICard) => {
-              return (
-                <Card
-                  key={card.id}
-                  card={card}
-                  handleClick={handleChoice}
-                  flipped={isFlipped(card)}
-                  disabled={isDisabled}
-                />
-              );
-            })}
+          <AnimatePresence>
+            {cards &&
+              cards.map((card: ICard) => {
+                return (
+                  <Card
+                    key={card.id}
+                    card={card}
+                    handleClick={handleChoice}
+                    flipped={isFlipped(card)}
+                    disabled={isDisabled}
+                  />
+                );
+              })}
+          </AnimatePresence>
         </div>
       </div>
       <footer className="App-footer">

@@ -17,6 +17,35 @@ body {
     background-color: #150b14;
     font-family: 'MedievalSharp', cursive;
     text-align: center;
+
+    h1 {
+      margin: 1.5rem;
+    }
+
+    .Start-Button {
+      width: fit-content;
+      font-size: xx-large;
+      font-family: 'MedievalSharp', cursive;
+      cursor: pointer;
+      background-color: #150b14;
+      color: white;
+      border: 0.15rem white solid;
+      border-radius: 10px;
+      padding: 0.5rem 2rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .Start-Button:hover {
+      background-color: white;
+      color: #150b14;
+    }
+
+    .Turns-Count,
+    .Tip {
+      margin: 2rem 0 0 0;
+      padding: 0;
+    }
   }
 
   .App-footer {
@@ -46,23 +75,5 @@ body {
       grid-gap: 2rem;
       margin-top: 2rem;
     }
-  }
-
-  .Start-Button {
-    width: fit-content;
-    font-size: xx-large;
-    font-family: 'MedievalSharp', cursive;
-    cursor: pointer;
-    background-color: #150b14;
-    color: white;
-    border: 0.15rem white solid;
-    border-radius: 10px;
-    padding: 0.5rem 2rem;
-    font-weight: 600;
-  }
-
-  .Start-Button:hover {
-    background-color: white;
-    color: #150b14;
   }
 }

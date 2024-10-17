@@ -1,6 +1,7 @@
 import React from 'react';
-import './Card.scss';
 import { ICard } from '../../interfaces/ICard';
+import { motion } from 'framer-motion';
+import './Card.scss';
 
 const Card = (props: {
   card: ICard;
@@ -16,7 +17,11 @@ const Card = (props: {
 
   return (
     <div className="Card">
-      <div className={`${flipped ? 'Flipped' : ''}`}>
+      <motion.div
+        className={`${flipped ? 'Flipped' : ''}`}
+        initial={{ scale: 0 }}
+        animate={{ scale: 0.95, transition: { delay: 0.4, type: 'spring' } }}
+      >
         {flipped && (
           <img className="Card-Front" src={card.image} alt="Card Front"></img>
         )}
@@ -27,7 +32,7 @@ const Card = (props: {
           alt="Card Back"
           onClick={handleChoice}
         ></img>
-      </div>
+      </motion.div>
     </div>
   );
 };
