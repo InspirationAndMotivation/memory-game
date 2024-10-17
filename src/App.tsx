@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ICard } from './interfaces/ICard';
 import Card from './components/Card/Card';
-import { AnimatePresence } from 'framer-motion';
 import './App.scss';
 
 const App = () => {
@@ -89,20 +88,18 @@ const App = () => {
       </header>
       <div className="Game-Canvas">
         <div className="Cards-Grid">
-          <AnimatePresence>
-            {cards &&
-              cards.map((card: ICard) => {
-                return (
-                  <Card
-                    key={card.id}
-                    card={card}
-                    handleClick={handleChoice}
-                    flipped={isFlipped(card)}
-                    disabled={isDisabled}
-                  />
-                );
-              })}
-          </AnimatePresence>
+          {cards &&
+            cards.map((card: ICard) => {
+              return (
+                <Card
+                  key={card.id}
+                  card={card}
+                  handleClick={handleChoice}
+                  flipped={isFlipped(card)}
+                  disabled={isDisabled}
+                />
+              );
+            })}
         </div>
       </div>
       <footer className="App-footer">
