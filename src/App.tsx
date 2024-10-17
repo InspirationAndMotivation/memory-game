@@ -25,7 +25,7 @@ const App = () => {
   const shuffleCards = () => {
     // Paste cards into array twice (because we need pairs of cards for game)
     const shuffledCards = [...cardImages, ...cardImages]
-      .sort(() => Math.random() - 0.5)
+      .sort(() => Math.random() - 0.7)
       .map((card) => ({ ...card, id: Math.random() }));
 
     setCards(shuffledCards);

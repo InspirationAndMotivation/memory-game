@@ -17,10 +17,9 @@ const Card = (props: {
   return (
     <div className="Card">
       <div className={`${flipped ? 'Flipped' : ''}`}>
-        {/* {flipped && (
+        {flipped && (
           <img className="Card-Front" src={card.image} alt="Card Front"></img>
-        )} */}
-        <img className="Card-Front" src={card.image} alt="Card Front"></img>
+        )}
 
         <img
           className="Card-Back"
