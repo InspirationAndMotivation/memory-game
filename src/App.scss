@@ -1,0 +1,68 @@
+body {
+  background-color: #150b14;
+  overflow: hidden;
+}
+
+.App {
+  text-align: center;
+  color: white;
+  font-size: calc(10px + 2vmin);
+
+  .App-header {
+    padding: 10px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #150b14;
+    font-family: 'MedievalSharp', cursive;
+    text-align: center;
+  }
+
+  .App-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: calc(8px + 1vmin);
+    margin-top: 1rem;
+    color: white;
+    background-color: #150b14;
+    font-family: 'MedievalSharp', cursive;
+    text-align: center;
+
+    a:visited {
+      color: #d279e3;
+    }
+  }
+
+  .Game-Canvas {
+    display: flex;
+    justify-content: center;
+
+    .Cards-Grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-gap: 2rem;
+      margin-top: 2rem;
+    }
+  }
+
+  .Start-Button {
+    width: fit-content;
+    font-size: xx-large;
+    font-family: 'MedievalSharp', cursive;
+    cursor: pointer;
+    background-color: #150b14;
+    color: white;
+    border: 0.15rem white solid;
+    border-radius: 10px;
+    padding: 0.5rem 2rem;
+    font-weight: 600;
+  }
+
+  .Start-Button:hover {
+    background-color: white;
+    color: #150b14;
+  }
+}

@@ -1,0 +1,40 @@
+.Card {
+  position: relative;
+
+  .Card-Front,
+  .Card-Back {
+    width: 200px;
+    height: 200px;
+    display: block;
+    border-radius: 10px;
+  }
+
+  .Card-Front {
+    transform: rotateY(90deg);
+    transition: all ease-in 0.2s;
+    position: absolute;
+    backface-visibility: hidden;
+  }
+
+  .Flipped .Card-Front {
+    transform: rotateY(0deg);
+    transition-delay: 0.2s;
+    backface-visibility: visible;
+  }
+
+  .Card-Back {
+    transition: all ease-in 0.2s;
+    transition-delay: 0.2s;
+    backface-visibility: visible;
+  }
+
+  .Flipped .Card-Back {
+    transform: rotateY(90deg);
+    transition-delay: 0s;
+    backface-visibility: hidden;
+  }
+
+  .Matched {
+    pointer-events: none;
+  }
+}
