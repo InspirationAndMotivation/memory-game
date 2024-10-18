@@ -51,7 +51,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    shuffleCards();
+    shuffleCards(); // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
