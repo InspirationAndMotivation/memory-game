@@ -1,25 +1,91 @@
 import React, { useEffect, useState } from 'react';
 import { ICard } from './interfaces/ICard';
+import BurgerMenu from './components/BurgerMenu/BurgerMenu';
 import Card from './components/Card/Card';
 import './App.scss';
 
 const App = () => {
   const cardImages = [
-    { id: 0, image: '/img/cards/chest-1.png', matched: false },
-    { id: 1, image: '/img/cards/magic-artifact-1.png', matched: false },
-    { id: 2, image: '/img/cards/magic-artifact-2.png', matched: false },
-    { id: 3, image: '/img/cards/magnifying-glass-1.png', matched: false },
-    { id: 4, image: '/img/cards/mana-bottle-1.png', matched: false },
-    { id: 5, image: '/img/cards/relic-1.png', matched: false },
-    { id: 6, image: '/img/cards/cauldron-1.png', matched: false },
-    { id: 7, image: '/img/cards/dragon-head-1.png', matched: false },
-    { id: 8, image: '/img/cards/magic-book-1.png', matched: false },
-    { id: 9, image: '/img/cards/magic-gem-1.png', matched: false },
-    { id: 10, image: '/img/cards/magic-hat-1.png', matched: false },
-    { id: 11, image: '/img/cards/magic-lamp-1.png', matched: false },
-    { id: 12, image: '/img/cards/triangle-cube-1.png', matched: false },
-    { id: 13, image: '/img/cards/witch-cat-1.png', matched: false },
-    { id: 14, image: '/img/cards/sword-1.png', matched: false },
+    { id: 0, image: '/img/cards/chest-1.png', name: 'Chest', matched: false },
+    {
+      id: 1,
+      image: '/img/cards/magic-artifact-1.png',
+      name: 'Artifact Feather',
+      matched: false,
+    },
+    {
+      id: 2,
+      image: '/img/cards/magic-artifact-2.png',
+      name: 'Artifact Tear',
+      matched: false,
+    },
+    {
+      id: 3,
+      image: '/img/cards/magnifying-glass-1.png',
+      name: 'Magnifying Glass',
+      matched: false,
+    },
+    {
+      id: 4,
+      image: '/img/cards/mana-bottle-1.png',
+      name: 'Mana Potion',
+      matched: false,
+    },
+    { id: 5, image: '/img/cards/relic-1.png', name: 'Relic', matched: false },
+    {
+      id: 6,
+      image: '/img/cards/cauldron-1.png',
+      name: 'Cauldron',
+      matched: false,
+    },
+    {
+      id: 7,
+      image: '/img/cards/dragon-head-1.png',
+      name: 'Dragon Head',
+      matched: false,
+    },
+    {
+      id: 8,
+      image: '/img/cards/magic-book-1.png',
+      name: 'Magic Book',
+      matched: false,
+    },
+    {
+      id: 9,
+      image: '/img/cards/magic-gem-1.png',
+      name: 'Magic Gem',
+      matched: false,
+    },
+    {
+      id: 10,
+      image: '/img/cards/magic-hat-1.png',
+      name: 'Magic Hat',
+      matched: false,
+    },
+    {
+      id: 11,
+      image: '/img/cards/magic-lamp-1.png',
+      name: 'Magic Lamp',
+      matched: false,
+    },
+    {
+      id: 12,
+      image: '/img/cards/triangle-cube-1.png',
+      name: 'Triangle Dice',
+      matched: false,
+    },
+    {
+      id: 13,
+      image: '/img/cards/witch-cat-1.png',
+      name: 'Witch`s Cat',
+      matched: false,
+    },
+    {
+      id: 14,
+      image: '/img/cards/sword-1.png',
+      name: 'Short Sword',
+      matched: false,
+    },
   ];
 
   const [cards, setCards] = useState<ICard[]>([]);
@@ -41,6 +107,8 @@ const App = () => {
       .map((card) => ({ ...card, id: Math.random() }));
 
     setCards(shuffledCards);
+    setFirstChoice(null);
+    setSecondChoice(null);
     setTurns(0);
   };
 
@@ -87,7 +155,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-Header"></header>
+      <header className="App-Header">
+        <BurgerMenu />
+      </header>
       <div className="Game-Panel">
         <h1>Magic Memory game</h1>
         <button className="Start-Button" onClick={shuffleCards}>
