@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import { ICard } from './interfaces/ICard';
+import AudioPlayer from './components/AudioPlayer/AudioPlayer';
+import AlertPopup from './components/AlertPopup/AlertPopup';
 import BurgerMenu from './components/BurgerMenu/BurgerMenu';
 import Card from './components/Card/Card';
 import './App.scss';
@@ -88,6 +91,7 @@ const App = () => {
     },
   ];
 
+  const [win, setWin] = useState<boolean>(false);
   const [cards, setCards] = useState<ICard[]>([]);
   const [cardsAmount, setCardsAmount] = useState<number>(6);
   const [firstChoice, setFirstChoice] = useState<ICard | null>(null);
@@ -107,6 +111,7 @@ const App = () => {
       .map((card) => ({ ...card, id: Math.random() }));
 
     setCards(shuffledCards);
+    setWin(false);
     setFirstChoice(null);
     setSecondChoice(null);
     setTurns(0);
@@ -153,10 +158,24 @@ const App = () => {
     }
   }, [firstChoice, secondChoice]);
 
+  useEffect(() => {
+    // Check if all cards in array are matched, if so - game is over, so we're setting a win
+    const isAllCardsMatched = cards.find((card) => !card.matched);
+    if (!isAllCardsMatched) setWin(true);
+  }, [cards]);
+
+  useEffect(() => {
+    if (win) {
+      console.log('HURRA! YOU WON THE GAME!');
+      confetti();
+    } else console.log('New game started!');
+  }, [win]);
+
   return (
     <div className="App">
       <header className="App-Header">
         <BurgerMenu />
+        <AudioPlayer />
       </header>
       <div className="Game-Panel">
         <h1>Magic Memory game</h1>
@@ -187,6 +206,10 @@ const App = () => {
             })}
         </div>
       </div>
+      <AlertPopup
+        title={'Hurra! You won!'}
+        text={'Now you can enter your name to '}
+      />
       <footer className="App-footer">
         <p>
           Made by{' '}
