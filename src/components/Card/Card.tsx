@@ -17,7 +17,7 @@ const Card = (props: {
   return (
     <div className="Card">
       <div className={`${flipped ? 'Flipped' : ''}`}>
-        <img className="Card-Front" src={card.image} alt="Card Front"></img>
+        <img className="Card-Front" src={card.image} alt={card.name}></img>
 
         <img
           className="Card-Back"
