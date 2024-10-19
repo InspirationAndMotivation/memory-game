@@ -8,46 +8,11 @@ body {
   color: white;
   font-size: calc(6px + 2vmin);
 
-  .App-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+  .App-Header {
+    padding-block: 2rem;
     width: 100%;
-    font-size: calc(8px + 1vmin);
-    margin-top: 1rem;
-    color: white;
-    background-color: #150b14;
     font-family: 'MedievalSharp', cursive;
     text-align: center;
-
-    a:visited {
-      color: #d279e3;
-    }
-  }
-
-  .Game-Panel {
-    padding: 10px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin-bottom: 1rem;
-    background-color: #150b14;
-    font-family: 'MedievalSharp', cursive;
-    text-align: center;
-
-    .Score-Panel {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-
-      .Stats {
-        display: flex;
-        flex-direction: row;
-        text-align: center;
-        justify-content: center;
-        gap: 1rem;
-      }
-    }
 
     h1 {
       margin: 0 0 1.5rem 0;
@@ -71,11 +36,51 @@ body {
       background-color: white;
       color: #150b14;
     }
+  }
+
+  .App-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: calc(8px + 1vmin);
+    margin-top: 1rem;
+    color: white;
+    background-color: #150b14;
+    font-family: 'MedievalSharp', cursive;
+    text-align: center;
+
+    a:visited {
+      color: #d279e3;
+    }
+  }
+
+  .Game-Info-Panel {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #150b14;
+    font-family: 'MedievalSharp', cursive;
+    text-align: center;
+
+    .Score-Panel {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      .Stats {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
 
     .Turns-Count,
     .Paired-Cards-Count,
+    .Time-Count,
     .Tip {
-      margin: 2rem 0 0 0;
+      margin: 0.5rem 0 0 0;
       padding: 0;
     }
   }

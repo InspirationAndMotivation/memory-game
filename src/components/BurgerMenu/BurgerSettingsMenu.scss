@@ -1,0 +1,52 @@
+.Burger-Settings-Menu {
+  display: flex;
+  flex-direction: column;
+
+  .Settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #effffa;
+    // transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
+  }
+
+  .Settings-Button {
+    width: 30px;
+    height: 30px;
+    padding: 1rem;
+    margin-inline: 0.75rem;
+  }
+
+  .Settings-Button:hover {
+    animation: spinning 3s infinite linear;
+  }
+}
+
+@keyframes spinning {
+  0% {
+    -moz-transform: rotate(320deg);
+    -webkit-transform: rotate(320deg);
+    -o-transform: rotate(320deg);
+    -ms-transform: rotate(320deg);
+  }
+  100% {
+    -moz-transform: rotate(680deg);
+    -webkit-transform: rotate(680deg);
+    -o-transform: rotate(680deg);
+    -ms-transform: rotate(680deg);
+  }
+}
+@-webkit-keyframes spinning {
+  0% {
+    -moz-transform: rotate(320deg);
+    -webkit-transform: rotate(320deg);
+    -o-transform: rotate(320deg);
+    -ms-transform: rotate(320deg);
+  }
+  100% {
+    -moz-transform: rotate(680deg);
+    -webkit-transform: rotate(680deg);
+    -o-transform: rotate(680deg);
+    -ms-transform: rotate(680deg);
+  }
+}

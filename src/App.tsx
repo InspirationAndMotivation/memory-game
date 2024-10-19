@@ -3,7 +3,8 @@ import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import { ICard } from './interfaces/ICard';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import AlertPopup from './components/AlertPopup/AlertPopup';
-import BurgerMenu from './components/BurgerMenu/BurgerMenu';
+import BurgerMenu from './components/BurgerMenu/BurgerSettingsMenu';
+import BurgerSettingsMenu from './components/BurgerMenu/BurgerSettingsMenu';
 import Card from './components/Card/Card';
 import './App.scss';
 
@@ -90,7 +91,7 @@ const App = () => {
       matched: false,
     },
   ];
-
+  const [open, setOpen] = useState(false);
   const [win, setWin] = useState<boolean>(false);
   const [cards, setCards] = useState<ICard[]>([]);
   const [cardsAmount, setCardsAmount] = useState<number>(6);
@@ -98,12 +99,23 @@ const App = () => {
   const [secondChoice, setSecondChoice] = useState<ICard | null>(null);
   const [turns, setTurns] = useState<number>(0);
   const [matchedPairs, setMatchedPairs] = useState<number>(0);
+  const [time, setTime] = useState<number>(0);
+  const [isStopwatchStarted, setIsStopwatchStarted] = useState(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const getMinutes = (time: number) => Math.floor((time % 360000) / 6000);
+  const getSeconds = (time: number) => Math.floor((time % 6000) / 100);
+  const formatZeroTime = (time: number) => (time < 10 ? `0${time}` : time);
+
+  const isFlipped = (card: ICard) => {
+    return card === firstChoice || card === secondChoice || card.matched;
+  };
 
   const resetGame = () => {
     setWin(false);
     setFirstChoice(null);
     setSecondChoice(null);
+    setTime(0);
     setTurns(0);
     setMatchedPairs(0);
   };
@@ -125,8 +137,10 @@ const App = () => {
 
   // Handle a card choice
   const handleChoice = (card: ICard) => {
+    if (firstChoice && !isStopwatchStarted) setIsStopwatchStarted(true);
+
     // Check if first choice has been already made (so it's set), if so, this choice will be second
-    firstChoice ? setSecondChoice(card) : setFirstChoice(card);
+    return firstChoice ? setSecondChoice(card) : setFirstChoice(card);
   };
 
   // When turn is finished - we need to increase turn and reset choices
@@ -135,10 +149,6 @@ const App = () => {
     setSecondChoice(null);
     setTurns((prevTurn) => prevTurn + 1);
     setIsDisabled(false);
-  };
-
-  const isFlipped = (card: ICard) => {
-    return card === firstChoice || card === secondChoice || card.matched;
   };
 
   useEffect(() => {
@@ -166,6 +176,15 @@ const App = () => {
   }, [firstChoice, secondChoice]);
 
   useEffect(() => {
+    let interval: number | NodeJS.Timeout | undefined;
+    if (isStopwatchStarted) {
+      // Setting time from 0 to 1 every 10 milisecond using setInterval method
+      interval = setInterval(() => setTime(time + 1), 10);
+    }
+    return () => clearInterval(interval);
+  }, [isStopwatchStarted, time]);
+
+  useEffect(() => {
     if (matchedPairs === cardsAmount) {
       setWin(true);
     }
@@ -173,6 +192,7 @@ const App = () => {
 
   useEffect(() => {
     if (win) {
+      setIsStopwatchStarted(false);
       console.log('HURRA! YOU WON THE GAME!');
       setTimeout(() => confetti(), 400);
     } else console.log('New game started!');
@@ -181,19 +201,23 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-Header">
-        <BurgerMenu />
-      </header>
-      <div className="Game-Panel">
         <h1>Magic Memory game</h1>
         <button className="Start-Button" onClick={shuffleCards}>
           Start
         </button>
+      </header>
+      <div className="Game-Info-Panel">
         <div className="Score-Panel">
           {turns > 0 ? (
             <div className="Stats">
               <p className="Turns-Count">Turn: {turns}</p>
               <p className="Paired-Cards-Count">
                 Paired: {matchedPairs} of {cardsAmount}
+              </p>
+              <p className="Time-Count">
+                Time:{` `}
+                {formatZeroTime(getMinutes(time))}:
+                {formatZeroTime(getSeconds(time))}
               </p>
             </div>
           ) : (
@@ -217,6 +241,7 @@ const App = () => {
             })}
         </div>
       </div>
+      <BurgerSettingsMenu open={open} setOpen={setOpen} />
       <footer className="App-footer">
         <p>
           Made by{' '}
