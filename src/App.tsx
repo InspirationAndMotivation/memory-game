@@ -97,7 +97,16 @@ const App = () => {
   const [firstChoice, setFirstChoice] = useState<ICard | null>(null);
   const [secondChoice, setSecondChoice] = useState<ICard | null>(null);
   const [turns, setTurns] = useState<number>(0);
+  const [matchedPairs, setMatchedPairs] = useState<number>(0);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const resetGame = () => {
+    setWin(false);
+    setFirstChoice(null);
+    setSecondChoice(null);
+    setTurns(0);
+    setMatchedPairs(0);
+  };
 
   // Start a game and shuffle cards
   const shuffleCards = () => {
@@ -110,11 +119,8 @@ const App = () => {
       .sort(() => Math.random() - 0.7)
       .map((card) => ({ ...card, id: Math.random() }));
 
+    resetGame();
     setCards(shuffledCards);
-    setWin(false);
-    setFirstChoice(null);
-    setSecondChoice(null);
-    setTurns(0);
   };
 
   // Handle a card choice
@@ -147,6 +153,7 @@ const App = () => {
         setCards((prevCards) => {
           return prevCards.map((card) => {
             if (card.image === firstChoice.image) {
+              setMatchedPairs(matchedPairs + 1);
               return { ...card, matched: true };
             } else {
               return card;
@@ -154,20 +161,20 @@ const App = () => {
           });
         });
       }
-      setTimeout(() => nextTurn(), 1000);
+      setTimeout(() => nextTurn(), 1100);
     }
   }, [firstChoice, secondChoice]);
 
   useEffect(() => {
-    // Check if all cards in array are matched, if so - game is over, so we're setting a win
-    const isAllCardsMatched = cards.find((card) => !card.matched);
-    if (!isAllCardsMatched) setWin(true);
-  }, [cards]);
+    if (matchedPairs === cardsAmount) {
+      setWin(true);
+    }
+  }, [matchedPairs]);
 
   useEffect(() => {
     if (win) {
       console.log('HURRA! YOU WON THE GAME!');
-      confetti();
+      setTimeout(() => confetti(), 400);
     } else console.log('New game started!');
   }, [win]);
 
@@ -175,7 +182,6 @@ const App = () => {
     <div className="App">
       <header className="App-Header">
         <BurgerMenu />
-        <AudioPlayer />
       </header>
       <div className="Game-Panel">
         <h1>Magic Memory game</h1>
@@ -184,7 +190,12 @@ const App = () => {
         </button>
         <div className="Score-Panel">
           {turns > 0 ? (
-            <p className="Turns-Count">Turn: {turns}</p>
+            <div className="Stats">
+              <p className="Turns-Count">Turn: {turns}</p>
+              <p className="Paired-Cards-Count">
+                Paired: {matchedPairs} of {cardsAmount}
+              </p>
+            </div>
           ) : (
             <p className="Tip">Pick your first pair of cards!</p>
           )}
@@ -206,10 +217,6 @@ const App = () => {
             })}
         </div>
       </div>
-      <AlertPopup
-        title={'Hurra! You won!'}
-        text={'Now you can enter your name to '}
-      />
       <footer className="App-footer">
         <p>
           Made by{' '}
