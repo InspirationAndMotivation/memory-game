@@ -4,8 +4,6 @@ import Card from './components/Card/Card';
 import './App.scss';
 
 const App = () => {
-  // { id: 6, image: '/img/cards/sword-1.png', matched: false },
-
   const cardImages = [
     { id: 0, image: '/img/cards/chest-1.png', matched: false },
     { id: 1, image: '/img/cards/magic-artifact-1.png', matched: false },
@@ -13,9 +11,19 @@ const App = () => {
     { id: 3, image: '/img/cards/magnifying-glass-1.png', matched: false },
     { id: 4, image: '/img/cards/mana-bottle-1.png', matched: false },
     { id: 5, image: '/img/cards/relic-1.png', matched: false },
+    { id: 6, image: '/img/cards/cauldron-1.png', matched: false },
+    { id: 7, image: '/img/cards/dragon-head-1.png', matched: false },
+    { id: 8, image: '/img/cards/magic-book-1.png', matched: false },
+    { id: 9, image: '/img/cards/magic-gem-1.png', matched: false },
+    { id: 10, image: '/img/cards/magic-hat-1.png', matched: false },
+    { id: 11, image: '/img/cards/magic-lamp-1.png', matched: false },
+    { id: 12, image: '/img/cards/triangle-cube-1.png', matched: false },
+    { id: 13, image: '/img/cards/witch-cat-1.png', matched: false },
+    { id: 14, image: '/img/cards/sword-1.png', matched: false },
   ];
 
   const [cards, setCards] = useState<ICard[]>([]);
+  const [cardsAmount, setCardsAmount] = useState<number>(6);
   const [firstChoice, setFirstChoice] = useState<ICard | null>(null);
   const [secondChoice, setSecondChoice] = useState<ICard | null>(null);
   const [turns, setTurns] = useState<number>(0);
@@ -23,8 +31,12 @@ const App = () => {
 
   // Start a game and shuffle cards
   const shuffleCards = () => {
+    // Pick only needed amount of cards
+    const unshuffledCards = cardImages
+      .sort(() => Math.random() - 0.81)
+      .slice(0, cardsAmount);
     // Paste cards into array twice (because we need pairs of cards for game)
-    const shuffledCards = [...cardImages, ...cardImages]
+    const shuffledCards = [...unshuffledCards, ...unshuffledCards]
       .sort(() => Math.random() - 0.7)
       .map((card) => ({ ...card, id: Math.random() }));
 
@@ -75,17 +87,20 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-Header"></header>
+      <div className="Game-Panel">
         <h1>Magic Memory game</h1>
         <button className="Start-Button" onClick={shuffleCards}>
           Start
         </button>
-        {turns > 0 ? (
-          <p className="Turns-Count">Turn: {turns}</p>
-        ) : (
-          <p className="Tip">Pick your first pair of cards!</p>
-        )}
-      </header>
+        <div className="Score-Panel">
+          {turns > 0 ? (
+            <p className="Turns-Count">Turn: {turns}</p>
+          ) : (
+            <p className="Tip">Pick your first pair of cards!</p>
+          )}
+        </div>
+      </div>
       <div className="Game-Canvas">
         <div className="Cards-Grid">
           {cards &&

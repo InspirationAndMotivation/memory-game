@@ -6,9 +6,29 @@ body {
 .App {
   text-align: center;
   color: white;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(6px + 2vmin);
 
-  .App-header {
+  .App-Header {
+  }
+
+  .App-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: calc(8px + 1vmin);
+    margin-top: 1rem;
+    color: white;
+    background-color: #150b14;
+    font-family: 'MedievalSharp', cursive;
+    text-align: center;
+
+    a:visited {
+      color: #d279e3;
+    }
+  }
+
+  .Game-Panel {
     padding: 10px;
     left: 0;
     top: 0;
@@ -18,15 +38,21 @@ body {
     font-family: 'MedievalSharp', cursive;
     text-align: center;
 
+    .Score-Panel {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+
     h1 {
       margin: 1.5rem;
     }
 
     .Start-Button {
-      width: fit-content;
-      font-size: xx-large;
-      font-family: 'MedievalSharp', cursive;
       cursor: pointer;
+      width: fit-content;
+      font-size: calc(10px + 1.5vmin);
+      font-family: 'MedievalSharp', cursive;
       background-color: #150b14;
       color: white;
       border: 0.15rem white solid;
@@ -45,23 +71,6 @@ body {
     .Tip {
       margin: 2rem 0 0 0;
       padding: 0;
-    }
-  }
-
-  .App-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    font-size: calc(8px + 1vmin);
-    margin-top: 1rem;
-    color: white;
-    background-color: #150b14;
-    font-family: 'MedievalSharp', cursive;
-    text-align: center;
-
-    a:visited {
-      color: #d279e3;
     }
   }
 

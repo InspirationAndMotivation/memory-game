@@ -3,8 +3,8 @@
 
   .Card-Front,
   .Card-Back {
-    width: 200px;
-    height: 200px;
+    width: calc(130px + 2vmin);
+    height: calc(130px + 2vmin);
     display: block;
     border-radius: 10px;
   }
