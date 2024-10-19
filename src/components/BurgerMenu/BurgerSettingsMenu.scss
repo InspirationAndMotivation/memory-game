@@ -1,13 +1,31 @@
 .Burger-Settings-Menu {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 1vh;
+  width: 300px;
+  z-index: 2;
 
   .Settings {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background: #effffa;
-    // transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
+    position: absolute;
+    color: white;
+    // background-color: #29183c;
+    background-color: #281526;
+    border-right: 2px solid white;
+    gap: 1rem;
+    padding-top: 4rem;
+    height: 100vh;
+    width: 20rem;
+    transform: translateX(-20rem);
+  }
+
+  .Settings.Active {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0rem);
   }
 
   .Settings-Button {
@@ -15,6 +33,7 @@
     height: 30px;
     padding: 1rem;
     margin-inline: 0.75rem;
+    z-index: 10;
   }
 
   .Settings-Button:hover {

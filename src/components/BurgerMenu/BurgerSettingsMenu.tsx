@@ -20,12 +20,16 @@ const BurgerSettingsMenu = (props: { open: boolean; setOpen: any }) => {
         onClick={() => setOpen(!open)}
       ></img>
       {open && (
-        <div className="Settings">
-          <div className="Setting">Set 1</div>
-          <div className="Setting">Set 2</div>
-          <div className="Setting">Set 3</div>
+        <div className={`Settings ${open ? 'Active' : ''}`}>
           <div className="Setting" onClick={play}>
-            Play
+            Play music
+          </div>
+          <div className="Setting">Setting 2 (Mods are planned)</div>
+          <div className="Setting">
+            Setting 3 (Additional parameters of game)
+          </div>
+          <div className="Setting">
+            Settting 4 (Here will be placed Top Scores Table)
           </div>
         </div>
       )}
