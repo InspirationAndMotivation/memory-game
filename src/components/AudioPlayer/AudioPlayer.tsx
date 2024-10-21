@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react';
 import './AudioPlayer.scss';
-// import sound from '../../../public/sound/Night_of_Mystery.m4a';
+import { playSong } from '../../core/Services/MusicService/MusicService';
 
 const AudioPlayer = () => {
-  const music = new Audio('./sounds/Night_of_Mystery.m4a');
-
   const play = () => {
-    music.play();
+    playSong('song1');
   };
 
-  //   useEffect(() => {
-  //     play();
-  //   }, []);
+  // useEffect(() => {
+  //   play();
+  // }, []);
 
   return (
     <div className="Audio-Player">

@@ -8,6 +8,7 @@ import BurgerMenu from './components/BurgerMenu/BurgerSettingsMenu';
 import BurgerSettingsMenu from './components/BurgerMenu/BurgerSettingsMenu';
 import Card from './components/Card/Card';
 import './App.scss';
+import { play } from './core/Services/SoundsService/SoundsService';
 
 const App = () => {
   const { mode } = useContext(ModeContext);
@@ -145,6 +146,8 @@ const App = () => {
   // Handle a card choice
   const handleChoice = (card: ICard) => {
     if (firstChoice && !isStopwatchStarted) setIsStopwatchStarted(true);
+    if (firstChoice) play('flip1');
+    else play('flip2');
 
     // Check if first choice has been already made (so it's set), if so, this choice will be second
     return firstChoice ? setSecondChoice(card) : setFirstChoice(card);
@@ -174,6 +177,7 @@ const App = () => {
         setCards((prevCards) => {
           return prevCards.map((card) => {
             if (card.image === firstChoice.image) {
+              play('matched');
               setMatchedPairs(matchedPairs + 1);
               return { ...card, matched: true };
             } else {
@@ -205,6 +209,7 @@ const App = () => {
     if (win) {
       setIsStopwatchStarted(false);
       console.log('HURRA! YOU WON THE GAME!');
+      play('win');
       setTimeout(() => confetti(), 400);
     } else console.log('New game started!');
   }, [win]);
