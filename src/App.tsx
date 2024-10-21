@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import { ICard } from './interfaces/ICard';
-import ModeContext from './core/Contexts/ModeContext';
+import GameContext from './core/Contexts/GameContext';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import AlertPopup from './components/AlertPopup/AlertPopup';
 import BurgerMenu from './components/BurgerMenu/BurgerSettingsMenu';
@@ -11,7 +11,8 @@ import './App.scss';
 import { play } from './core/Services/SoundsService/SoundsService';
 
 const App = () => {
-  const { mode } = useContext(ModeContext);
+  const { mode } = useContext(GameContext);
+  const { isSounds, isMusic } = useContext(GameContext);
   const getCardsAmount = (columns: number, rows: number) =>
     (columns * rows) / 2;
 
@@ -146,8 +147,8 @@ const App = () => {
   // Handle a card choice
   const handleChoice = (card: ICard) => {
     if (firstChoice && !isStopwatchStarted) setIsStopwatchStarted(true);
-    if (firstChoice) play('flip1');
-    else play('flip2');
+    if (firstChoice && isSounds) play('flip1');
+    else if (isSounds) play('flip2');
 
     // Check if first choice has been already made (so it's set), if so, this choice will be second
     return firstChoice ? setSecondChoice(card) : setFirstChoice(card);
@@ -177,7 +178,7 @@ const App = () => {
         setCards((prevCards) => {
           return prevCards.map((card) => {
             if (card.image === firstChoice.image) {
-              play('matched');
+              if (isSounds) play('matched');
               setMatchedPairs(matchedPairs + 1);
               return { ...card, matched: true };
             } else {
@@ -209,7 +210,7 @@ const App = () => {
     if (win) {
       setIsStopwatchStarted(false);
       console.log('HURRA! YOU WON THE GAME!');
-      play('win');
+      if (isSounds) play('win');
       setTimeout(() => confetti(), 400);
     } else console.log('New game started!');
   }, [win]);
@@ -220,6 +221,15 @@ const App = () => {
 
   return (
     <div className="App">
+      {/* <iframe
+        src="sounds/silence.mp3"
+        allow="autoplay"
+        id="audio"
+        style={{ display: 'none' }}
+      ></iframe>
+      <audio id="player" autoPlay loop muted={!isMusic}>
+        <source src="sounds/Night_of_Mystery.m4a" type="audio/mp3" />
+      </audio> */}
       <header className="App-Header">
         <h1>Magic Memory game</h1>
         <button className="Start-Button" onClick={shuffleCards}>

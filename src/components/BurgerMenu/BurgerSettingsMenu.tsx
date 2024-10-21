@@ -6,34 +6,50 @@ import React, {
   useContext,
 } from 'react';
 import './BurgerSettingsMenu.scss';
-import ModeContext from '../../core/Contexts/ModeContext';
+import GameContext from '../../core/Contexts/GameContext';
 
 const BurgerSettingsMenu = (props: { open: boolean; setOpen: any }) => {
   const music = new Audio('./sounds/Night_of_Mystery.m4a');
   const { open, setOpen } = props;
-  const { mode, setEasyMode, setNormalMode, setHardMode } =
-    useContext(ModeContext);
-
-  const [volume, setVolume] = useState<number>(20);
+  const {
+    mode,
+    setEasyMode,
+    setNormalMode,
+    setHardMode,
+    isSounds,
+    isMusic,
+    toggleMusic,
+    toggleSounds,
+    volume,
+    handleVolume,
+  } = useContext(GameContext);
 
   // const volumeRef = useRef(null);
 
   const play = () => {
-    music.volume = volume / 100;
+    music.volume = volume;
     music.play();
   };
 
   const handleVolumeChange = (event: any) => {
-    setVolume(event.target.value);
+    handleVolume(event.target.value);
+  };
+
+  const handleMusic = () => {
+    toggleMusic();
+  };
+
+  const handleSounds = () => {
+    toggleSounds();
   };
 
   useEffect(() => {
-    music.volume = volume / 100;
+    music.volume = volume;
     // music.play();
   }, [volume]);
 
   useEffect(() => {
-    console.log(mode);
+    // console.log(mode);
   }, [mode]);
 
   return (
@@ -48,6 +64,18 @@ const BurgerSettingsMenu = (props: { open: boolean; setOpen: any }) => {
         <div className={`Settings ${open ? 'Active' : ''}`}>
           <div className="Setting">
             <div onClick={play}> Play music</div>
+            <img
+              className="Sounds-Button"
+              src={isSounds ? '/img/sound.png' : '/img/mute_sound.png'}
+              alt="Sounds Button"
+              onClick={handleSounds}
+            ></img>
+            <img
+              className="Music-Button"
+              src={isMusic ? '/img/music.png' : '/img/mute_music.png'}
+              alt="Music Button"
+              onClick={handleMusic}
+            ></img>
             <input
               type="range"
               className="Volume-Slider"

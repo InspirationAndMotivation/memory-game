@@ -29,10 +29,15 @@
     transform: translateX(0rem);
   }
 
+  .Sounds-Button,
+  .Music-Button,
   .Settings-Button {
-    width: 30px;
-    height: 30px;
+    width: calc(25px + 1vmin);
+    height: calc(25px + 1vmin);
     padding: 1rem;
+  }
+
+  .Settings-Button {
     margin-inline: 0.75rem;
     z-index: 10;
   }
