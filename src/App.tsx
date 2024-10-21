@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import { ICard } from './interfaces/ICard';
+import ModeContext from './core/Contexts/ModeContext';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import AlertPopup from './components/AlertPopup/AlertPopup';
 import BurgerMenu from './components/BurgerMenu/BurgerSettingsMenu';
@@ -9,6 +10,10 @@ import Card from './components/Card/Card';
 import './App.scss';
 
 const App = () => {
+  const { mode } = useContext(ModeContext);
+  const getCardsAmount = (columns: number, rows: number) =>
+    (columns * rows) / 2;
+
   const cardImages = [
     { id: 0, image: '/img/cards/chest-1.png', name: 'Chest', matched: false },
     {
@@ -94,7 +99,9 @@ const App = () => {
   const [open, setOpen] = useState(false);
   const [win, setWin] = useState<boolean>(false);
   const [cards, setCards] = useState<ICard[]>([]);
-  const [cardsAmount, setCardsAmount] = useState<number>(6);
+  const [cardsAmount, setCardsAmount] = useState<number>(
+    getCardsAmount(mode.columnsNum, mode.rowsNum)
+  );
   const [firstChoice, setFirstChoice] = useState<ICard | null>(null);
   const [secondChoice, setSecondChoice] = useState<ICard | null>(null);
   const [turns, setTurns] = useState<number>(0);
@@ -156,6 +163,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    shuffleCards(); // eslint-disable-next-line
+  }, [cardsAmount]);
+
+  useEffect(() => {
     // Compare cards and if they matched - set matched property into true
     if (firstChoice && secondChoice) {
       setIsDisabled(true);
@@ -198,6 +209,10 @@ const App = () => {
     } else console.log('New game started!');
   }, [win]);
 
+  useEffect(() => {
+    setCardsAmount(getCardsAmount(mode.columnsNum, mode.rowsNum));
+  }, [mode]);
+
   return (
     <div className="App">
       <header className="App-Header">
@@ -226,7 +241,15 @@ const App = () => {
         </div>
       </div>
       <div className="Game-Canvas">
-        <div className="Cards-Grid">
+        <div
+          className={`Cards-Grid ${
+            mode.name === 'hard'
+              ? 'Hard'
+              : mode.name === 'normal'
+              ? 'Normal'
+              : 'Easy'
+          }`}
+        >
           {cards &&
             cards.map((card: ICard) => {
               return (

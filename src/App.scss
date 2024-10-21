@@ -91,9 +91,35 @@ body {
 
     .Cards-Grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
       grid-gap: 2rem;
       margin-top: 2rem;
+    }
+
+    .Easy {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .Normal {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+      .Card {
+        .Card-Front,
+        .Card-Back {
+          width: calc(110px + 2vmin);
+          height: calc(110px + 2vmin);
+        }
+      }
+    }
+
+    .Hard {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      .Card {
+        .Card-Front,
+        .Card-Back {
+          width: calc(75px + 2vmin);
+          height: calc(75px + 2vmin);
+        }
+      }
     }
   }
 }
