@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import { ICard } from './interfaces/ICard';
 import GameContext from './core/Contexts/GameContext';
@@ -112,6 +112,8 @@ const App = () => {
   const [isStopwatchStarted, setIsStopwatchStarted] = useState(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
+  const [showMobileWarning, setShowMobileWarning] = useState(false);
+
   const getMinutes = (time: number) => Math.floor((time % 360000) / 6000);
   const getSeconds = (time: number) => Math.floor((time % 6000) / 100);
   const formatZeroTime = (time: number) => (time < 10 ? `0${time}` : time);
@@ -119,6 +121,21 @@ const App = () => {
   const isFlipped = (card: ICard) => {
     return card === firstChoice || card === secondChoice || card.matched;
   };
+
+  const useWindowSize = () => {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener('resize', updateSize);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+  };
+
+  const [width, height] = useWindowSize();
 
   const resetGame = () => {
     setWin(false);
@@ -219,6 +236,12 @@ const App = () => {
     setCardsAmount(getCardsAmount(mode.columnsNum, mode.rowsNum));
   }, [mode]);
 
+  useEffect(() => {
+    console.log(window.innerWidth);
+    if (width <= 800 || height <= 1000) setShowMobileWarning(true);
+    else setShowMobileWarning(false);
+  }, [width, height]);
+
   return (
     <div className="App">
       {/* <iframe
@@ -230,56 +253,68 @@ const App = () => {
       <audio id="player" autoPlay loop muted={!isMusic}>
         <source src="sounds/Night_of_Mystery.m4a" type="audio/mp3" />
       </audio> */}
-      <header className="App-Header">
-        <h1>Magic Memory game</h1>
-        <button className="Start-Button" onClick={shuffleCards}>
-          Start
-        </button>
-      </header>
-      <div className="Game-Info-Panel">
-        <div className="Score-Panel">
-          {turns > 0 ? (
-            <div className="Stats">
-              <p className="Turns-Count">Turn: {turns}</p>
-              <p className="Paired-Cards-Count">
-                Paired: {matchedPairs} of {cardsAmount}
-              </p>
-              <p className="Time-Count">
-                Time:{` `}
-                {formatZeroTime(getMinutes(time))}:
-                {formatZeroTime(getSeconds(time))}
-              </p>
+      {showMobileWarning ? (
+        <>
+          <h1>Sorry!</h1>
+          <p>
+            This application isn't adapted for mobile view yet. <br /> Keep
+            abreast and it could change soon!
+          </p>
+        </>
+      ) : (
+        <>
+          <header className="App-Header">
+            <h1>Magic Memory game</h1>
+            <button className="Start-Button" onClick={shuffleCards}>
+              Start
+            </button>
+          </header>
+          <div className="Game-Info-Panel">
+            <div className="Score-Panel">
+              {turns > 0 ? (
+                <div className="Stats">
+                  <p className="Turns-Count">Turn: {turns}</p>
+                  <p className="Paired-Cards-Count">
+                    Paired: {matchedPairs} of {cardsAmount}
+                  </p>
+                  <p className="Time-Count">
+                    Time:{` `}
+                    {formatZeroTime(getMinutes(time))}:
+                    {formatZeroTime(getSeconds(time))}
+                  </p>
+                </div>
+              ) : (
+                <p className="Tip">Pick your first pair of cards!</p>
+              )}
             </div>
-          ) : (
-            <p className="Tip">Pick your first pair of cards!</p>
-          )}
-        </div>
-      </div>
-      <div className="Game-Canvas">
-        <div
-          className={`Cards-Grid ${
-            mode.name === 'hard'
-              ? 'Hard'
-              : mode.name === 'normal'
-              ? 'Normal'
-              : 'Easy'
-          }`}
-        >
-          {cards &&
-            cards.map((card: ICard) => {
-              return (
-                <Card
-                  key={card.id}
-                  card={card}
-                  handleClick={handleChoice}
-                  flipped={isFlipped(card)}
-                  disabled={isDisabled}
-                />
-              );
-            })}
-        </div>
-      </div>
-      <BurgerSettingsMenu open={open} setOpen={setOpen} />
+          </div>
+          <div className="Game-Canvas">
+            <div
+              className={`Cards-Grid ${
+                mode.name === 'hard'
+                  ? 'Hard'
+                  : mode.name === 'normal'
+                  ? 'Normal'
+                  : 'Easy'
+              }`}
+            >
+              {cards &&
+                cards.map((card: ICard) => {
+                  return (
+                    <Card
+                      key={card.id}
+                      card={card}
+                      handleClick={handleChoice}
+                      flipped={isFlipped(card)}
+                      disabled={isDisabled}
+                    />
+                  );
+                })}
+            </div>
+          </div>
+          <BurgerSettingsMenu open={open} setOpen={setOpen} />
+        </>
+      )}
       <footer className="App-footer">
         <p>
           Made by{' '}
