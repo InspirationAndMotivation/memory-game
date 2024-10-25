@@ -133,6 +133,8 @@ const App = () => {
 
   const useWindowSize = () => {
     const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
+
+    console.log(size);
     useLayoutEffect(() => {
       function updateSize() {
         setSize([window.innerWidth, window.innerHeight]);
@@ -253,8 +255,7 @@ const App = () => {
   }, [mode]);
 
   useEffect(() => {
-    console.log(window.innerWidth);
-    if (width <= 800 || height <= 1000) setShowMobileWarning(true);
+    if (width <= 800 || height <= 950) setShowMobileWarning(true);
     else setShowMobileWarning(false);
   }, [width, height]);
 
