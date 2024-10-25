@@ -4,13 +4,17 @@ import React, {
   useRef,
   useState,
   useContext,
+  RefObject,
 } from 'react';
 import './BurgerSettingsMenu.scss';
 import GameContext from '../../core/Contexts/GameContext';
 
-const BurgerSettingsMenu = (props: { open: boolean; setOpen: any }) => {
-  const music = new Audio('./sounds/Night_of_Mystery.m4a');
-  const { open, setOpen } = props;
+const BurgerSettingsMenu = (props: {
+  open: boolean;
+  setOpen: any;
+  audioRef: RefObject<HTMLAudioElement>;
+}) => {
+  const { open, setOpen, audioRef } = props;
   const {
     mode,
     setEasyMode,
@@ -20,20 +24,9 @@ const BurgerSettingsMenu = (props: { open: boolean; setOpen: any }) => {
     isMusic,
     toggleMusic,
     toggleSounds,
-    volume,
-    handleVolume,
   } = useContext(GameContext);
 
-  // const volumeRef = useRef(null);
-
-  const play = () => {
-    music.volume = volume;
-    music.play();
-  };
-
-  const handleVolumeChange = (event: any) => {
-    handleVolume(event.target.value);
-  };
+  const [volume, setVolume] = useState<number>(0.2);
 
   const handleMusic = () => {
     toggleMusic();
@@ -44,9 +37,11 @@ const BurgerSettingsMenu = (props: { open: boolean; setOpen: any }) => {
   };
 
   useEffect(() => {
-    music.volume = volume;
-    // music.play();
-  }, [volume]);
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      // console.log('Player volume changed to:' + audioRef.current.volume);
+    }
+  }, [volume, audioRef]);
 
   useEffect(() => {
     // console.log(mode);
@@ -63,7 +58,7 @@ const BurgerSettingsMenu = (props: { open: boolean; setOpen: any }) => {
       {open && (
         <div className={`Settings ${open ? 'Active' : ''}`}>
           <div className="Setting">
-            <div onClick={play}> Play music</div>
+            <div> Play music</div>
             <img
               className="Sounds-Button"
               src={isSounds ? '/img/sound.png' : '/img/mute_sound.png'}
@@ -79,11 +74,12 @@ const BurgerSettingsMenu = (props: { open: boolean; setOpen: any }) => {
             <input
               type="range"
               className="Volume-Slider"
+              id="slider"
               min={0}
-              max={100}
-              step={1}
-              value={volume}
-              onChange={handleVolumeChange}
+              max={1}
+              step={0.05}
+              value={!isMusic ? 0 : volume}
+              onChange={(e: any) => setVolume(e.target.value)}
             />
           </div>
           <div className="Setting">

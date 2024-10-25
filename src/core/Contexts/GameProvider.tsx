@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GameContext from './GameContext';
 
 const mods = {
@@ -17,7 +17,7 @@ const mods = {
     columnsNum: 6,
     rowsNum: 5,
   },
-  // extrem: {
+  // extreme: {
   //   name: 'extrem',
   //   columnsNum: 8,
   //   rowsNum: 7,
@@ -28,7 +28,6 @@ const GameProvider = ({ children }: any) => {
   const [mode, setMode] = useState(mods.easy);
   const [isSounds, setIsSounds] = useState(true);
   const [isMusic, setIsMusic] = useState(false);
-  const [volume, setVolume] = useState(0.2);
 
   const setEasyMode = () => setMode(mods.easy);
 
@@ -39,8 +38,6 @@ const GameProvider = ({ children }: any) => {
   const toggleSounds = () => setIsSounds(!isSounds);
 
   const toggleMusic = () => setIsMusic(!isMusic);
-
-  const handleVolume = (vol: number) => setVolume(vol / 100);
 
   return (
     <GameContext.Provider
@@ -54,8 +51,6 @@ const GameProvider = ({ children }: any) => {
         isMusic,
         toggleSounds,
         toggleMusic,
-        volume,
-        handleVolume,
       }}
     >
       {children}

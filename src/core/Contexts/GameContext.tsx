@@ -15,6 +15,4 @@ export default createContext({
   isMusic: false,
   toggleSounds: () => {},
   toggleMusic: () => {},
-  volume: 0.2,
-  handleVolume: (vol: number) => {},
 });

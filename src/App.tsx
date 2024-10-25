@@ -1,6 +1,13 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
-import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+import React, {
+  RefObject,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { ICard } from './interfaces/ICard';
+import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import GameContext from './core/Contexts/GameContext';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import AlertPopup from './components/AlertPopup/AlertPopup';
@@ -11,8 +18,7 @@ import './App.scss';
 import { play } from './core/Services/SoundsService/SoundsService';
 
 const App = () => {
-  const { mode } = useContext(GameContext);
-  const { isSounds, isMusic } = useContext(GameContext);
+  const { mode, isSounds, toggleMusic } = useContext(GameContext);
   const getCardsAmount = (columns: number, rows: number) =>
     (columns * rows) / 2;
 
@@ -114,6 +120,9 @@ const App = () => {
 
   const [showMobileWarning, setShowMobileWarning] = useState(false);
 
+  // Reference for audio component
+  const audioPlayer = useRef<HTMLAudioElement>(null);
+
   const getMinutes = (time: number) => Math.floor((time % 360000) / 6000);
   const getSeconds = (time: number) => Math.floor((time % 6000) / 100);
   const formatZeroTime = (time: number) => (time < 10 ? `0${time}` : time);
@@ -123,7 +132,7 @@ const App = () => {
   };
 
   const useWindowSize = () => {
-    const [size, setSize] = useState([0, 0]);
+    const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
     useLayoutEffect(() => {
       function updateSize() {
         setSize([window.innerWidth, window.innerHeight]);
@@ -228,7 +237,14 @@ const App = () => {
       setIsStopwatchStarted(false);
       console.log('HURRA! YOU WON THE GAME!');
       if (isSounds) play('win');
-      setTimeout(() => confetti(), 400);
+      setTimeout(
+        () =>
+          confetti({
+            particleCount: 120,
+            spread: 160,
+          }),
+        400
+      );
     } else console.log('New game started!');
   }, [win]);
 
@@ -244,15 +260,9 @@ const App = () => {
 
   return (
     <div className="App">
-      {/* <iframe
-        src="sounds/silence.mp3"
-        allow="autoplay"
-        id="audio"
-        style={{ display: 'none' }}
-      ></iframe>
-      <audio id="player" autoPlay loop muted={!isMusic}>
-        <source src="sounds/Night_of_Mystery.m4a" type="audio/mp3" />
-      </audio> */}
+      <AudioPlayer
+        audioRef={audioPlayer as RefObject<HTMLAudioElement>}
+      ></AudioPlayer>
       {showMobileWarning ? (
         <>
           <h1>Sorry!</h1>
@@ -312,7 +322,12 @@ const App = () => {
                 })}
             </div>
           </div>
-          <BurgerSettingsMenu open={open} setOpen={setOpen} />
+          <BurgerSettingsMenu
+            open={open}
+            setOpen={setOpen}
+            // audioRef={audioPlayer.current as HTMLAudioElement}
+            audioRef={audioPlayer as RefObject<HTMLAudioElement>}
+          />
         </>
       )}
       <footer className="App-footer">
