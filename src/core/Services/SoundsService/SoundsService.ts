@@ -7,6 +7,7 @@ const sounds = [
   { name: 'lose', sound: new Audio('./sounds/lose.m4a') },
   { name: 'flip1', sound: new Audio('./sounds/flip.m4a') },
   { name: 'flip2', sound: new Audio('./sounds/flip.m4a') },
+  { name: 'wrongchoice', sound: new Audio('./sounds/wrongchoice.m4a') },
 ];
 
 export const play = (soundName: string) => {
