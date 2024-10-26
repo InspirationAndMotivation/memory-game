@@ -261,7 +261,8 @@ const App = () => {
   }, [mode]);
 
   useEffect(() => {
-    if (width <= 800 || height <= 950) setShowMobileWarning(true);
+    if (width <= 800) setShowMobileWarning(true);
+    // if (width <= 800 && height <= 950) setShowMobileWarning(true);
     else setShowMobileWarning(false);
   }, [width, height]);
 

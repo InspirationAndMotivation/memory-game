@@ -52,7 +52,7 @@ const BurgerSettingsMenu = (props: {
       {open && (
         <div className={`Settings ${open ? 'Active' : ''}`}>
           <div className="Setting">
-            <div> Play music</div>
+            <p className="Settings-Title">Sounds settings</p>
             <img
               className="Sounds-Button"
               src={isSounds ? '/img/sound.png' : '/img/mute_sound.png'}
@@ -78,7 +78,7 @@ const BurgerSettingsMenu = (props: {
           </div>
           <div className="Setting">
             <fieldset className="Game-Mode-Setting">
-              <legend>Select a game mode:</legend>
+              <p className="Settings-Title">Select a game mode:</p>
               <div className="Radio-Group">
                 <label htmlFor="easy" className="Radio-Element">
                   <input
@@ -119,10 +119,14 @@ const BurgerSettingsMenu = (props: {
             </fieldset>
           </div>
           <div className="Setting">
-            Setting 3 (Additional parameters of game)
+            <p className="Settings-Title">
+              Setting 3 (Additional parameters of game)
+            </p>
           </div>
           <div className="Setting">
-            Settting 4 (Here will be placed Top Scores Table)
+            <p className="Settings-Title">
+              Settting 4 (Here will be placed Top Scores Table)
+            </p>
           </div>
         </div>
       )}
