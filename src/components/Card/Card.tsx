@@ -16,7 +16,6 @@ const Card = (props: {
 
   const handleChoice = () => {
     if (!disabled) handleClick(card);
-    else handlePickedAlready();
   };
 
   const handlePickedAlready = () => {
