@@ -1,25 +1,32 @@
-import React, { RefObject, useContext, useEffect, useRef } from 'react';
+import React, {
+  RefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import './AudioPlayer.scss';
 import { playSong } from '../../core/Services/MusicService/MusicService';
 import GameContext from '../../core/Contexts/GameContext';
 
 const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
   const { isMusic } = useContext(GameContext);
+  const [isMusicStarted, setIsMusicStarted] = useState<boolean>(false);
   const audioRef = props;
 
   useEffect(() => {
-    // audioRef.audioRef.current?.muted = !isMusic;
-    audioRef.audioRef.current?.play();
+    document.body.addEventListener('click', () => {
+      if (!isMusicStarted) {
+        audioRef.audioRef.current?.play();
+        setIsMusicStarted(true);
+      }
+    });
   }, []);
 
   // useEffect(() => {
-  //   audioRef.audioRef.current.volume = volume;
-  // }, [audioRef]);
-
-  useEffect(() => {
-    console.log('VOLUME FROM PLAYER');
-    console.log(audioRef.audioRef.current?.volume);
-  });
+  //   console.log('VOLUME FROM PLAYER');
+  //   console.log(audioRef.audioRef.current?.volume);
+  // }, [audioRef.audioRef.current?.volume]);
 
   return (
     <div className="Audio-Player">

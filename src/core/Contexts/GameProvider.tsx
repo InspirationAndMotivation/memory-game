@@ -27,7 +27,7 @@ const mods = {
 const GameProvider = ({ children }: any) => {
   const [mode, setMode] = useState(mods.easy);
   const [isSounds, setIsSounds] = useState(true);
-  const [isMusic, setIsMusic] = useState(false);
+  const [isMusic, setIsMusic] = useState(true);
 
   const setEasyMode = () => setMode(mods.easy);
 

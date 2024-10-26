@@ -1,4 +1,5 @@
-const volume = 0.35;
+// Default volume 25%
+const volume = 0.25;
 
 const sounds = [
   { name: 'matched', sound: new Audio('./sounds/matched.m4a') },

@@ -26,7 +26,8 @@ const BurgerSettingsMenu = (props: {
     toggleSounds,
   } = useContext(GameContext);
 
-  const [volume, setVolume] = useState<number>(0.2);
+  // Default volume 10%
+  const [volume, setVolume] = useState<number>(0.1);
 
   const handleMusic = () => {
     toggleMusic();

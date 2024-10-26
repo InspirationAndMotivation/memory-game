@@ -134,7 +134,6 @@ const App = () => {
   const useWindowSize = () => {
     const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
 
-    console.log(size);
     useLayoutEffect(() => {
       function updateSize() {
         setSize([window.innerWidth, window.innerHeight]);

@@ -12,7 +12,7 @@ export default createContext({
   setNormalMode: () => {},
   setHardMode: () => {},
   isSounds: true,
-  isMusic: false,
+  isMusic: true,
   toggleSounds: () => {},
   toggleMusic: () => {},
 });

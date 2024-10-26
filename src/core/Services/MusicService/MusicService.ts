@@ -1,4 +1,5 @@
-const volume = 0.2;
+// Default volume 10%
+const volume = 0.1;
 
 const playlist = [
   { name: 'song1', sound: new Audio('./sounds/Night_of_Mystery.m4a') },
