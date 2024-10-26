@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
+import GameContext from '../../core/Contexts/GameContext';
 import { ICard } from '../../interfaces/ICard';
 import { play } from '../../core/Services/SoundsService/SoundsService';
 import './Card.scss';
-import GameContext from '../../core/Contexts/GameContext';
 
 const Card = (props: {
   card: ICard;

@@ -1,13 +1,6 @@
-import React, {
-  ChangeEvent,
-  useEffect,
-  useRef,
-  useState,
-  useContext,
-  RefObject,
-} from 'react';
-import './BurgerSettingsMenu.scss';
+import React, { useEffect, useState, useContext, RefObject } from 'react';
 import GameContext from '../../core/Contexts/GameContext';
+import './BurgerSettingsMenu.scss';
 
 const BurgerSettingsMenu = (props: {
   open: boolean;

@@ -1,6 +1,6 @@
 import React, { RefObject, useContext, useEffect, useState } from 'react';
-import './AudioPlayer.scss';
 import GameContext from '../../core/Contexts/GameContext';
+import './AudioPlayer.scss';
 
 const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
   const { isMusic } = useContext(GameContext);

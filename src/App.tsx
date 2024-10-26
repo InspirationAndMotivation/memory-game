@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { play } from './core/Services/SoundsService/SoundsService';
 import { ICard } from './interfaces/ICard';
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import GameContext from './core/Contexts/GameContext';
@@ -14,7 +15,6 @@ import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import BurgerSettingsMenu from './components/BurgerMenu/BurgerSettingsMenu';
 import Card from './components/Card/Card';
 import './App.scss';
-import { play } from './core/Services/SoundsService/SoundsService';
 
 const App = () => {
   const { mode, isSounds } = useContext(GameContext);
