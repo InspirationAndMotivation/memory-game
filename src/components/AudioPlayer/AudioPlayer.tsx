@@ -1,12 +1,5 @@
-import React, {
-  RefObject,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { RefObject, useContext, useEffect, useState } from 'react';
 import './AudioPlayer.scss';
-import { playSong } from '../../core/Services/MusicService/MusicService';
 import GameContext from '../../core/Contexts/GameContext';
 
 const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
@@ -21,6 +14,7 @@ const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
         setIsMusicStarted(true);
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   // useEffect(() => {
@@ -31,10 +25,11 @@ const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
   return (
     <div className="Audio-Player">
       <iframe
-        src="sounds/silence.mp3"
+        src="sounds/silence.m4a"
         allow="autoplay"
         id="audio"
         style={{ display: 'none' }}
+        title="silence"
       ></iframe>
       <audio
         ref={audioRef.audioRef}

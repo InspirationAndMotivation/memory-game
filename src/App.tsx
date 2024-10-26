@@ -10,15 +10,14 @@ import { ICard } from './interfaces/ICard';
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import GameContext from './core/Contexts/GameContext';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
-import AlertPopup from './components/AlertPopup/AlertPopup';
-import BurgerMenu from './components/BurgerMenu/BurgerSettingsMenu';
+// import AlertPopup from './components/AlertPopup/AlertPopup';
 import BurgerSettingsMenu from './components/BurgerMenu/BurgerSettingsMenu';
 import Card from './components/Card/Card';
 import './App.scss';
 import { play } from './core/Services/SoundsService/SoundsService';
 
 const App = () => {
-  const { mode, isSounds, toggleMusic } = useContext(GameContext);
+  const { mode, isSounds } = useContext(GameContext);
   const getCardsAmount = (columns: number, rows: number) =>
     (columns * rows) / 2;
 
@@ -171,6 +170,11 @@ const App = () => {
     setCards(shuffledCards);
   };
 
+  // Handle if card is choosen already
+  const handleFlippedAlready = () => {
+    if (isSounds) play('wrongchoice');
+  };
+
   // Handle a card choice
   const handleChoice = (card: ICard) => {
     if (firstChoice && !isStopwatchStarted) setIsStopwatchStarted(true);
@@ -216,6 +220,7 @@ const App = () => {
       }
       setTimeout(() => nextTurn(), 1100);
     }
+    // eslint-disable-next-line
   }, [firstChoice, secondChoice]);
 
   useEffect(() => {
@@ -231,6 +236,7 @@ const App = () => {
     if (matchedPairs === cardsAmount) {
       setWin(true);
     }
+    // eslint-disable-next-line
   }, [matchedPairs]);
 
   useEffect(() => {
@@ -247,6 +253,7 @@ const App = () => {
         400
       );
     } else console.log('New game started!');
+    // eslint-disable-next-line
   }, [win]);
 
   useEffect(() => {
@@ -314,7 +321,9 @@ const App = () => {
                     <Card
                       key={card.id}
                       card={card}
-                      handleClick={handleChoice}
+                      handleClick={
+                        isFlipped(card) ? handleFlippedAlready : handleChoice
+                      }
                       flipped={isFlipped(card)}
                       disabled={isDisabled}
                     />
@@ -325,7 +334,6 @@ const App = () => {
           <BurgerSettingsMenu
             open={open}
             setOpen={setOpen}
-            // audioRef={audioPlayer.current as HTMLAudioElement}
             audioRef={audioPlayer as RefObject<HTMLAudioElement>}
           />
         </>

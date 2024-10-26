@@ -22,6 +22,10 @@
     backface-visibility: visible;
   }
 
+  .Card-Front[wobble='1'] {
+    animation: wobble 1s 1;
+  }
+
   .Card-Back {
     transition: all ease-in 0.2s;
     transition-delay: 0.2s;
@@ -40,6 +44,35 @@
 
   -webkit-animation: transformer 1s ease-in 0s 1;
   animation: transformer 1s ease-in 0s 1;
+}
+
+@-webkit-keyframes wobble {
+  25% {
+    transform: rotate(3deg);
+  }
+  50% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes wobble {
+  25% {
+    transform: rotate(3deg);
+  }
+  50% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 @-webkit-keyframes transformer {
   0% {
