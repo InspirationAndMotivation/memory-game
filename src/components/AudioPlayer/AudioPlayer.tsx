@@ -2,10 +2,30 @@ import React, { RefObject, useContext, useEffect, useState } from 'react';
 import GameContext from '../../core/Contexts/GameContext';
 import './AudioPlayer.scss';
 
+const playlist = [
+  { songName: 'sounds/Tam_Lin_Royalty_Fantasy_Music.m4a' },
+  { songName: 'sounds/Night_of_Mystery.m4a' },
+  { songName: 'sounds/Adventure_Beyond.m4a' },
+  { songName: 'sounds/Children_of_the_Forest.m4a' },
+  { songName: 'sounds/Enchanted_Echoes.m4a' },
+];
+
+const defaultSong = playlist[1];
+
 const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
   const { isMusic } = useContext(GameContext);
   const [isMusicStarted, setIsMusicStarted] = useState<boolean>(false);
+  const [playingSong, setPlayingSong] = useState<string>(defaultSong.songName);
   const audioRef = props;
+
+  const randomTrack = () => {
+    const song = [...playlist]
+      .sort(() => Math.random() - 0.7)
+      .find((song) => ({ ...song, id: Math.random() }));
+
+    if (song) return song.songName;
+    else return defaultSong.songName;
+  };
 
   useEffect(() => {
     document.body.addEventListener('click', () => {
@@ -15,6 +35,10 @@ const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
       }
     });
     // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    setPlayingSong(randomTrack);
   }, []);
 
   // useEffect(() => {
@@ -37,9 +61,9 @@ const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
         id="AutoPlayer"
         autoPlay
         loop
-        src="sounds/Night_of_Mystery.m4a"
+        src={playingSong}
       >
-        <source src="sounds/Night_of_Mystery.m4a" type="audio/mp3" />
+        <source src={playingSong} type="audio/mp3" />
       </audio>
     </div>
   );
