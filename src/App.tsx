@@ -242,7 +242,6 @@ const App = () => {
   useEffect(() => {
     if (win) {
       setIsStopwatchStarted(false);
-      console.log('HURRA! YOU WON THE GAME!');
       if (isSounds) play('win');
       setTimeout(
         () =>

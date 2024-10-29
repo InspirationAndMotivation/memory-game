@@ -38,7 +38,7 @@ const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
   }, []);
 
   useEffect(() => {
-    setPlayingSong(randomTrack);
+    setPlayingSong(randomTrack());
   }, []);
 
   // useEffect(() => {
