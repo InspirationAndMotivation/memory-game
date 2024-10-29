@@ -247,7 +247,7 @@ const App = () => {
         () =>
           confetti({
             particleCount: 120,
-            spread: 160,
+            spread: width / 10, // Spread 160 is perfect, but as for me - too big angle for mobile view
           }),
         400
       );
