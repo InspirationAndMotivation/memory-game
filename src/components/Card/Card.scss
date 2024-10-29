@@ -108,3 +108,51 @@
     transform: scale(0.95);
   }
 }
+
+@media (min-width: 1200px) and (min-height: 1000px) {
+  .Card .Card-Front,
+  .Card .Card-Back {
+    width: calc(140px + 2vmin);
+    height: calc(140px + 2vmin);
+  }
+}
+
+@media ((min-width: 768px) and (min-height: 900px)) and ((max-width: 1200px) and (min-height: 900px)) {
+  .Card .Card-Front,
+  .Card .Card-Back {
+    width: calc(120px + 2vmin);
+    height: calc(120px + 2vmin);
+  }
+}
+
+@media ((min-width: 480px) and (min-height: 700px)) and ((max-width: 768px) and (min-height: 700px)) {
+  .Easy .Card .Card-Front,
+  .Easy .Card .Card-Back {
+    width: calc(87px + 2vmin);
+    height: calc(87px + 2vmin);
+  }
+
+  .Normal .Card .Card-Front,
+  .Normal .Card .Card-Back,
+  .Hard .Card .Card-Front,
+  .Hard .Card .Card-Back {
+    width: calc(60px + 2vmin) !important;
+    height: calc(60px + 2vmin) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .Easy .Card .Card-Front,
+  .Easy .Card .Card-Back {
+    width: calc(65px + 2vmin) !important;
+    height: calc(65px + 2vmin) !important;
+  }
+
+  .Normal .Card .Card-Front,
+  .Normal .Card .Card-Back,
+  .Hard .Card .Card-Front,
+  .Hard .Card .Card-Back {
+    width: calc(50px + 2vmin) !important;
+    height: calc(50px + 2vmin) !important;
+  }
+}

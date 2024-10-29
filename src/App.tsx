@@ -260,8 +260,7 @@ const App = () => {
   }, [mode]);
 
   useEffect(() => {
-    if (width <= 800) setShowMobileWarning(true);
-    // if (width <= 800 && height <= 950) setShowMobileWarning(true);
+    if (width <= 360 || height <= 670) setShowMobileWarning(true);
     else setShowMobileWarning(false);
   }, [width, height]);
 
@@ -274,8 +273,8 @@ const App = () => {
         <>
           <h1>Sorry!</h1>
           <p>
-            This application isn't adapted for mobile view yet. <br /> Keep
-            abreast and it could change soon!
+            This application isn't adapted for so small mobile view yet. <br />{' '}
+            Keep abreast and it could change soon!
           </p>
         </>
       ) : (

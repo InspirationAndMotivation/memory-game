@@ -123,3 +123,85 @@ body {
     }
   }
 }
+
+@media (min-width: 1200px) {
+  .App .Game-Canvas .Cards-Grid {
+    grid-gap: 2rem;
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .App .Game-Canvas .Cards-Grid {
+    grid-gap: 1.75rem;
+    margin-top: 1.75rem;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 768px) {
+  .App .Game-Canvas .Cards-Grid {
+    grid-gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .App .App-Header h1 {
+    font-size: 1.4rem;
+  }
+
+  .Start-Button {
+    font-size: calc(7px + 1.5vmin) !important;
+  }
+
+  .Settings-Button {
+    width: calc(20px + 1vmin) !important;
+    height: calc(20px + 1vmin) !important;
+  }
+
+  .App .Game-Canvas .Normal {
+    grid-template-columns: 1fr 1fr 1fr 1fr !important;
+  }
+
+  .App .Game-Canvas .Hard {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .App .Game-Canvas .Cards-Grid {
+    grid-gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .App .App-Header h1 {
+    font-size: 1.1rem;
+  }
+
+  .Start-Button {
+    font-size: calc(7px + 1.5vmin) !important;
+  }
+
+  .Radio-Group .Radio-Element {
+    font-size: calc(7px + 1.5vmin) !important;
+  }
+
+  .Settings-Button,
+  .Sounds-Button,
+  .Music-Button {
+    width: calc(17px + 1vmin) !important;
+    height: calc(17px + 1vmin) !important;
+  }
+
+  .App .Game-Canvas .Normal {
+    grid-template-columns: 1fr 1fr 1fr 1fr !important;
+  }
+
+  .App .Game-Canvas .Hard {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr !important;
+  }
+}
+
+@media (max-height: 900px) {
+  .App .Game-Canvas {
+    overflow-y: scroll;
+  }
+}
