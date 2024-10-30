@@ -356,6 +356,11 @@ const App = () => {
   }, [lose]);
 
   useEffect(() => {
+    if ((mode.name === 'race' || mode.name === 'apocalypse') && time === 500)
+      play('timer');
+  }, [time, mode]);
+
+  useEffect(() => {
     setCardsAmount(getCardsAmount(difficulty.columnsNum, difficulty.rowsNum));
   }, [difficulty]);
 
