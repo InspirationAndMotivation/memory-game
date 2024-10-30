@@ -16,17 +16,18 @@
     color: white;
     // background-color: #29183c;
     background-color: #281526;
-    border-right: 2px solid white;
+    border-right: 2px solid rgba($color: #fff, $alpha: 0.2);
     gap: 1rem;
     padding-top: 4rem;
     height: 100vh;
     width: 20rem;
     transform: translateX(-20rem);
+    transition: transform 0.7s ease-in-out;
   }
 
   .Settings.Active {
-    transition: transform 0.3s ease-in-out;
     transform: translateX(0rem);
+    transition: transform 0.7s ease-in-out;
   }
 
   .Sounds-Button,

@@ -53,7 +53,7 @@ const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
       <audio
         ref={audioRef.audioRef}
         muted={!isMusic}
-        id="AutoPlayer"
+        id="autoPlayer"
         autoPlay
         loop
         src={playingSong}
