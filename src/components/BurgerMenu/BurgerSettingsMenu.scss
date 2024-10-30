@@ -63,8 +63,10 @@
     opacity: 1;
   }
 
-  .Game-Mode-Setting {
+  .Game-Mode-Setting,
+  .Game-Parameters-Setting {
     border: none;
+    padding: 0;
 
     .Radio-Group {
       display: flex;
@@ -79,6 +81,33 @@
         input[type='radio'] {
           accent-color: #d279e3;
         }
+      }
+
+      .Tooltip {
+        .Tooltip-Text {
+          visibility: hidden;
+          text-align: center;
+          font-size: medium;
+          position: absolute;
+
+          background-color: #29183c;
+          color: #ffffff;
+
+          width: 18rem;
+          padding: 8px;
+          border-radius: 6px;
+
+          transition: opacity 0.6s;
+          opacity: 0;
+          z-index: 1;
+
+          margin-left: 5px;
+        }
+      }
+
+      .Tooltip:hover .Tooltip-Text {
+        visibility: visible;
+        opacity: 1;
       }
     }
   }

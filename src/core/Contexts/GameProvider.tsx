@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import GameContext from './GameContext';
 
-const mods = {
+const difficulties = {
   easy: {
     name: 'easy',
     columnsNum: 4,
@@ -24,16 +24,40 @@ const mods = {
   // },
 };
 
+const mods = {
+  casual: {
+    name: 'casual',
+  },
+  tactic: {
+    name: 'tactic',
+  },
+  race: {
+    name: 'race',
+  },
+  apocalypse: {
+    name: 'apocalypse',
+  },
+};
+
 const GameProvider = ({ children }: any) => {
-  const [mode, setMode] = useState(mods.easy);
+  const [mode, setMode] = useState(mods.casual);
+  const [difficulty, setDifficulty] = useState(difficulties.easy);
   const [isSounds, setIsSounds] = useState(true);
   const [isMusic, setIsMusic] = useState(true);
 
-  const setEasyMode = () => setMode(mods.easy);
+  const setCasualMode = () => setMode(mods.casual);
 
-  const setNormalMode = () => setMode(mods.normal);
+  const setTacticMode = () => setMode(mods.tactic);
 
-  const setHardMode = () => setMode(mods.hard);
+  const setRaceMode = () => setMode(mods.race);
+
+  const setApocalypseMode = () => setMode(mods.apocalypse);
+
+  const setEasyDifficulty = () => setDifficulty(difficulties.easy);
+
+  const setNormalDifficulty = () => setDifficulty(difficulties.normal);
+
+  const setHardDifficulty = () => setDifficulty(difficulties.hard);
 
   const toggleSounds = () => setIsSounds(!isSounds);
 
@@ -44,9 +68,15 @@ const GameProvider = ({ children }: any) => {
       value={{
         mods,
         mode,
-        setEasyMode,
-        setNormalMode,
-        setHardMode,
+        setCasualMode,
+        setTacticMode,
+        setRaceMode,
+        setApocalypseMode,
+        difficulties,
+        difficulty,
+        setEasyDifficulty,
+        setNormalDifficulty,
+        setHardDifficulty,
         isSounds,
         isMusic,
         toggleSounds,

@@ -41,11 +41,6 @@ const AudioPlayer = (props: { audioRef: RefObject<HTMLAudioElement> }) => {
     setPlayingSong(randomTrack());
   }, []);
 
-  // useEffect(() => {
-  //   console.log('VOLUME FROM PLAYER');
-  //   console.log(audioRef.audioRef.current?.volume);
-  // }, [audioRef.audioRef.current?.volume]);
-
   return (
     <div className="Audio-Player">
       <iframe

@@ -10,9 +10,14 @@ const BurgerSettingsMenu = (props: {
   const { open, setOpen, audioRef } = props;
   const {
     mode,
-    setEasyMode,
-    setNormalMode,
-    setHardMode,
+    setCasualMode,
+    setTacticMode,
+    setRaceMode,
+    setApocalypseMode,
+    difficulty,
+    setEasyDifficulty,
+    setNormalDifficulty,
+    setHardDifficulty,
     isSounds,
     isMusic,
     toggleMusic,
@@ -36,10 +41,6 @@ const BurgerSettingsMenu = (props: {
       // console.log('Player volume changed to:' + audioRef.current.volume);
     }
   }, [volume, audioRef]);
-
-  useEffect(() => {
-    // console.log(mode);
-  }, [mode]);
 
   return (
     <div className="Burger-Settings-Menu">
@@ -78,16 +79,16 @@ const BurgerSettingsMenu = (props: {
           </div>
           <div className="Setting">
             <fieldset className="Game-Mode-Setting">
-              <p className="Settings-Title">Select a game mode:</p>
+              <p className="Settings-Title">Select a difficulty:</p>
               <div className="Radio-Group">
                 <label htmlFor="easy" className="Radio-Element">
                   <input
                     type="radio"
                     id="easy"
-                    name="mode"
+                    name="difficulty"
                     value="easy"
-                    checked={mode.name === 'easy'}
-                    onChange={() => setEasyMode()}
+                    checked={difficulty.name === 'easy'}
+                    onChange={() => setEasyDifficulty()}
                   />{' '}
                   Easy
                 </label>
@@ -96,10 +97,10 @@ const BurgerSettingsMenu = (props: {
                   <input
                     type="radio"
                     id="normal"
-                    name="mode"
+                    name="difficulty"
                     value="normal"
-                    checked={mode.name === 'normal'}
-                    onChange={() => setNormalMode()}
+                    checked={difficulty.name === 'normal'}
+                    onChange={() => setNormalDifficulty()}
                   />{' '}
                   Normal
                 </label>
@@ -108,10 +109,10 @@ const BurgerSettingsMenu = (props: {
                   <input
                     type="radio"
                     id="hard"
-                    name="mode"
+                    name="difficulty"
                     value="hard"
-                    checked={mode.name === 'hard'}
-                    onChange={() => setHardMode()}
+                    checked={difficulty.name === 'hard'}
+                    onChange={() => setHardDifficulty()}
                   />{' '}
                   Hard
                 </label>
@@ -119,9 +120,98 @@ const BurgerSettingsMenu = (props: {
             </fieldset>
           </div>
           <div className="Setting">
-            <p className="Settings-Title">
-              Setting 3 (Additional parameters of game)
-            </p>
+            <fieldset className="Game-Parameters-Setting">
+              <p className="Settings-Title">Select a game mode:</p>
+              <div className="Radio-Group">
+                <label htmlFor="casual" className="Radio-Element Tooltip">
+                  <input
+                    type="radio"
+                    id="casual"
+                    name="mode"
+                    value="casual"
+                    checked={mode.name === 'casual'}
+                    onChange={() => setCasualMode()}
+                  />{' '}
+                  Casual
+                  <span className="Tooltip-Text">
+                    Dive into <b>Casual</b>, the ultimate no-pressure mode!
+                    <br />
+                    Enjoy pairing cards at your own pace without any
+                    complications or limitations. Relax, explore the board, and
+                    have fun as you find matches in this laid-back environment.
+                    <br />
+                    Perfect for casual play!
+                  </span>
+                </label>
+
+                <label htmlFor="tactic" className="Radio-Element Tooltip">
+                  <input
+                    type="radio"
+                    id="tactic"
+                    name="mode"
+                    value="tactic"
+                    checked={mode.name === 'tactic'}
+                    onChange={() => setTacticMode()}
+                  />{' '}
+                  Tactic
+                  <span className="Tooltip-Text">
+                    Welcome to <b>Tactic</b>, where every move counts!
+                    <br />
+                    Your goal is to pair the cards in the fewest turns possible.
+                    Plan your moves carefully, remember card placements, and
+                    showcase your tactical skills as you aim for the lowest
+                    score.
+                    <br />
+                    How efficiently can you match them all?
+                  </span>
+                </label>
+
+                <label htmlFor="race" className="Radio-Element Tooltip">
+                  <input
+                    type="radio"
+                    id="race"
+                    name="mode"
+                    value="race"
+                    checked={mode.name === 'race'}
+                    onChange={() => setRaceMode()}
+                  />{' '}
+                  Race
+                  <span className="Tooltip-Text">
+                    In <b>Race</b>, the clock is ticking!
+                    <br />
+                    Pair the cards as quickly as possible before time runs out.
+                    Challenge yourself to make the fastest matches and see how
+                    many pairs you can find under pressure.
+                    <br />
+                    Will you rise to the challenge?
+                  </span>
+                </label>
+
+                <label htmlFor="apocalypse" className="Radio-Element Tooltip">
+                  <input
+                    type="radio"
+                    id="apocalypse"
+                    name="mode"
+                    value="apocalypse"
+                    checked={mode.name === 'apocalypse'}
+                    onChange={() => setApocalypseMode()}
+                  />{' '}
+                  Apocalypse
+                  <span className="Tooltip-Text">
+                    Enter <b>Apocalypse</b>, mode for experienced players, where
+                    speed meets skill!
+                    <br />
+                    In this mode, you must pair the cards as quickly as possible
+                    while also minimizing your turns. Balance the thrill of
+                    racing against the clock with the need for careful planning.
+                    <br />
+                    Can you make swift decisions and outsmart the timer to
+                    achieve the best score? Test your memory and strategy in
+                    this fast-paced challenge!
+                  </span>
+                </label>
+              </div>
+            </fieldset>
           </div>
           <div className="Setting">
             <p className="Settings-Title">

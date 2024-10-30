@@ -1,0 +1,21 @@
+.Score-Panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .Stats {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+.Turns-Count,
+.Paired-Cards-Count,
+.Time-Count,
+.Tip {
+  margin: 0.5rem 0 0 0;
+  padding: 0;
+}

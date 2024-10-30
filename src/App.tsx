@@ -11,13 +11,14 @@ import { ICard } from './interfaces/ICard';
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 import GameContext from './core/Contexts/GameContext';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
+import ScorePanel from './components/ScorePanel/ScorePanel';
 // import AlertPopup from './components/AlertPopup/AlertPopup';
 import BurgerSettingsMenu from './components/BurgerMenu/BurgerSettingsMenu';
 import Card from './components/Card/Card';
 import './App.scss';
 
 const App = () => {
-  const { mode, isSounds } = useContext(GameContext);
+  const { mode, difficulty, isSounds } = useContext(GameContext);
   const getCardsAmount = (columns: number, rows: number) =>
     (columns * rows) / 2;
 
@@ -103,11 +104,23 @@ const App = () => {
       matched: false,
     },
   ];
+
+  const modsParameters = {
+    casual: { turns: 0, time: 0 },
+    tactic: { easy: 8, normal: 20, hard: 35 },
+    race: { easy: 2000, normal: 4500, hard: 6500 }, // 00:20, 00:45, 1:05
+    apocalypse: {
+      easy: { turns: 13, time: 2500 }, // 00:25
+      normal: { turns: 25, time: 5500 }, // 00:55
+      hard: { turns: 40, time: 8000 }, // 1:20
+    },
+  };
   const [open, setOpen] = useState(false);
   const [win, setWin] = useState<boolean>(false);
+  const [lose, setLose] = useState<boolean>(false);
   const [cards, setCards] = useState<ICard[]>([]);
   const [cardsAmount, setCardsAmount] = useState<number>(
-    getCardsAmount(mode.columnsNum, mode.rowsNum)
+    getCardsAmount(difficulty.columnsNum, difficulty.rowsNum)
   );
   const [firstChoice, setFirstChoice] = useState<ICard | null>(null);
   const [secondChoice, setSecondChoice] = useState<ICard | null>(null);
@@ -121,10 +134,6 @@ const App = () => {
 
   // Reference for audio component
   const audioPlayer = useRef<HTMLAudioElement>(null);
-
-  const getMinutes = (time: number) => Math.floor((time % 360000) / 6000);
-  const getSeconds = (time: number) => Math.floor((time % 6000) / 100);
-  const formatZeroTime = (time: number) => (time < 10 ? `0${time}` : time);
 
   const isFlipped = (card: ICard) => {
     return card === firstChoice || card === secondChoice || card.matched;
@@ -146,13 +155,46 @@ const App = () => {
 
   const [width, height] = useWindowSize();
 
+  const getCurrentDifficulty = () => {
+    const currentDifficulty =
+      difficulty.name === 'easy'
+        ? 'easy'
+        : difficulty.name === 'normal'
+        ? 'normal'
+        : 'hard';
+    return currentDifficulty;
+  };
+
+  const handleTimeResetting = () => {
+    const currentDifficulty = getCurrentDifficulty();
+
+    if (mode.name === 'race') {
+      setTime(modsParameters['race'][currentDifficulty]);
+    } else if (mode.name === 'apocalypse') {
+      setTime(modsParameters['apocalypse'][currentDifficulty]['time']);
+    } else setTime(0);
+  };
+
+  const handleTurnsResetting = () => {
+    const currentDifficulty = getCurrentDifficulty();
+
+    if (mode.name === 'tactic') {
+      setTurns(modsParameters['tactic'][currentDifficulty]);
+    } else if (mode.name === 'apocalypse') {
+      setTurns(modsParameters['apocalypse'][currentDifficulty]['turns']);
+    } else setTurns(0);
+  };
+
   const resetGame = () => {
     setWin(false);
+    setLose(false);
     setFirstChoice(null);
     setSecondChoice(null);
-    setTime(0);
-    setTurns(0);
+    handleTimeResetting();
+    handleTurnsResetting();
+    setIsStopwatchStarted(false);
     setMatchedPairs(0);
+    setIsDisabled(false);
   };
 
   // Start a game and shuffle cards
@@ -189,7 +231,9 @@ const App = () => {
   const nextTurn = () => {
     setFirstChoice(null);
     setSecondChoice(null);
-    setTurns((prevTurn) => prevTurn + 1);
+    if (mode.name === 'tactic' || mode.name === 'apocalypse')
+      setTurns((prevTurn) => prevTurn - 1);
+    else setTurns((prevTurn) => prevTurn + 1);
     setIsDisabled(false);
   };
 
@@ -199,7 +243,7 @@ const App = () => {
 
   useEffect(() => {
     shuffleCards(); // eslint-disable-next-line
-  }, [cardsAmount]);
+  }, [cardsAmount, mode]);
 
   useEffect(() => {
     // Compare cards and if they matched - set matched property into true
@@ -226,22 +270,55 @@ const App = () => {
   useEffect(() => {
     let interval: number | NodeJS.Timeout | undefined;
     if (isStopwatchStarted) {
-      // Setting time from 0 to 1 every 10 milisecond using setInterval method
-      interval = setInterval(() => setTime(time + 1), 10);
+      if (mode.name === 'race' || mode.name === 'apocalypse') {
+        // Setting time from 1 to 0 every 10 milisecond using setInterval method
+        interval = setInterval(() => setTime(time - 1), 10);
+      } else {
+        // Setting time from 0 to 1 every 10 milisecond using setInterval method
+        interval = setInterval(() => setTime(time + 1), 10);
+      }
     }
     return () => clearInterval(interval);
+    // eslint-disable-next-line
   }, [isStopwatchStarted, time]);
 
+  // Win conditions
   useEffect(() => {
-    if (matchedPairs === cardsAmount) {
+    if (matchedPairs === cardsAmount && !lose) {
       setWin(true);
     }
     // eslint-disable-next-line
   }, [matchedPairs]);
 
+  // Lose conditions by time
+  useEffect(() => {
+    if (
+      (mode.name === 'race' || mode.name === 'apocalypse') &&
+      time === 0 &&
+      !win
+    ) {
+      setLose(true);
+    }
+    // eslint-disable-next-line
+  }, [time]);
+
+  // Lose conditions by turns
+  useEffect(() => {
+    if (
+      (mode.name === 'tactic' || mode.name === 'apocalypse') &&
+      turns === 0 &&
+      !win
+    ) {
+      setLose(true);
+    }
+    // eslint-disable-next-line
+  }, [turns]);
+
   useEffect(() => {
     if (win) {
       setIsStopwatchStarted(false);
+      setIsDisabled(true);
+
       if (isSounds) play('win');
       setTimeout(
         () =>
@@ -256,8 +333,31 @@ const App = () => {
   }, [win]);
 
   useEffect(() => {
-    setCardsAmount(getCardsAmount(mode.columnsNum, mode.rowsNum));
-  }, [mode]);
+    if (lose) {
+      setIsStopwatchStarted(false);
+      setIsDisabled(true);
+
+      if (isSounds) play('lose');
+      const scalar = 2;
+      const emoji = confetti.shapeFromText({ text: '😭', scalar });
+
+      setTimeout(
+        () =>
+          confetti({
+            shapes: [emoji],
+            scalar: scalar,
+            particleCount: 120,
+            spread: width / 10, // Spread 160 is perfect, but as for me - too big angle for mobile view
+          }),
+        400
+      );
+    } else console.log('New game started!');
+    // eslint-disable-next-line
+  }, [lose]);
+
+  useEffect(() => {
+    setCardsAmount(getCardsAmount(difficulty.columnsNum, difficulty.rowsNum));
+  }, [difficulty]);
 
   useEffect(() => {
     if (width <= 360 || height <= 670) setShowMobileWarning(true);
@@ -286,30 +386,25 @@ const App = () => {
             </button>
           </header>
           <div className="Game-Info-Panel">
-            <div className="Score-Panel">
-              {turns > 0 ? (
-                <div className="Stats">
-                  <p className="Turns-Count">Turn: {turns}</p>
-                  <p className="Paired-Cards-Count">
-                    Paired: {matchedPairs} of {cardsAmount}
-                  </p>
-                  <p className="Time-Count">
-                    Time:{` `}
-                    {formatZeroTime(getMinutes(time))}:
-                    {formatZeroTime(getSeconds(time))}
-                  </p>
-                </div>
-              ) : (
-                <p className="Tip">Pick your first pair of cards!</p>
-              )}
-            </div>
+            <ScorePanel
+              mode={mode}
+              modsParameters={modsParameters}
+              matchedPairs={matchedPairs}
+              cardsAmount={cardsAmount}
+              time={time}
+              turns={turns}
+              currentDifficulty={getCurrentDifficulty()}
+              lose={lose}
+              win={win}
+              isGameStarted={isStopwatchStarted}
+            ></ScorePanel>
           </div>
           <div className="Game-Canvas">
             <div
               className={`Cards-Grid ${
-                mode.name === 'hard'
+                difficulty.name === 'hard'
                   ? 'Hard'
-                  : mode.name === 'normal'
+                  : difficulty.name === 'normal'
                   ? 'Normal'
                   : 'Easy'
               }`}
