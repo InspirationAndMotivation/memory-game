@@ -1,0 +1,116 @@
+.Modal-Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px); /* Background blur */
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Modal-Container {
+  width: 85%;
+  // TODO: Fix it if not so much data
+  height: 75%;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #150b14;
+  overflow: hidden;
+}
+
+// TODO: Fix it
+
+// .Modal-Container .Data-Container {
+//   overflow-y: scroll;
+// }
+
+// .Modal-Container .Data-Container::-webkit-scrollbar-track {
+//   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+//   background-color: #f5f5f5;
+//   border-radius: 10px;
+// }
+
+// .Modal-Container .Data-Container::-webkit-scrollbar {
+//   width: 10px;
+//   background-color: #f5f5f5;
+// }
+
+// .Modal-Container .Data-Container::-webkit-scrollbar-thumb {
+//   border-radius: 10px;
+//   background-image: -webkit-gradient(
+//     linear,
+//     left bottom,
+//     left top,
+//     color-stop(0.44, rgb(122, 153, 217)),
+//     color-stop(0.72, rgb(73, 125, 189)),
+//     color-stop(0.86, rgb(28, 58, 148))
+//   );
+// }
+
+.Modal-Header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Modal-Header .Tab-Change-Menu {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  .Active {
+    background-color: #d279e3;
+    color: #150b14;
+  }
+}
+
+.Modal-Header button {
+  cursor: pointer;
+  font-family: 'MedievalSharp', cursive;
+  font-size: calc(8px + 1vmin);
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid #d279e3;
+  color: #d279e3;
+
+  padding: 10px;
+  margin: 1rem 0;
+  transition: all 0.3s ease;
+}
+
+.Modal-Header button:hover {
+  background-color: #d279e3;
+  color: #150b14;
+}
+
+.Modal-Header .Buttons .Close-Button {
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  font-size: calc(7px + 1.5vmin);
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+//TODO: Change it
+.SearchFilterSorting .Note {
+  font-size: medium;
+}

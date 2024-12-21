@@ -23,4 +23,6 @@ export default createContext({
   isMusic: true,
   toggleSounds: () => {},
   toggleMusic: () => {},
+  isLeaderBoardVisible: false,
+  toggleLeaderBoard: () => {},
 });

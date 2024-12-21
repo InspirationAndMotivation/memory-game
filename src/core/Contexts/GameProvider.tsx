@@ -44,6 +44,7 @@ const GameProvider = ({ children }: any) => {
   const [difficulty, setDifficulty] = useState(difficulties.easy);
   const [isSounds, setIsSounds] = useState(true);
   const [isMusic, setIsMusic] = useState(true);
+  const [isLeaderBoardVisible, setIsLeaderBoardVisible] = useState(false);
 
   const setCasualMode = () => setMode(mods.casual);
 
@@ -63,6 +64,9 @@ const GameProvider = ({ children }: any) => {
 
   const toggleMusic = () => setIsMusic(!isMusic);
 
+  const toggleLeaderBoard = () =>
+    setIsLeaderBoardVisible(!isLeaderBoardVisible);
+
   return (
     <GameContext.Provider
       value={{
@@ -81,6 +85,8 @@ const GameProvider = ({ children }: any) => {
         isMusic,
         toggleSounds,
         toggleMusic,
+        isLeaderBoardVisible,
+        toggleLeaderBoard,
       }}
     >
       {children}

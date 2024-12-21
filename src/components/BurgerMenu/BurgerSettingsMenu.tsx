@@ -28,6 +28,7 @@ const BurgerSettingsMenu = (props: {
     isMusic,
     toggleMusic,
     toggleSounds,
+    toggleLeaderBoard,
   } = useContext(GameContext);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
 
@@ -42,9 +43,9 @@ const BurgerSettingsMenu = (props: {
     toggleSounds();
   };
 
-  useEffect(() => {
-    console.log(open);
-  }, [open]);
+  // useEffect(() => {
+  //   console.log(open);
+  // }, [open]);
 
   const handleClick = (event: any) => {
     if (
@@ -241,9 +242,22 @@ const BurgerSettingsMenu = (props: {
           </fieldset>
         </div>
         <div className="Setting">
-          <p className="Settings-Title">
-            Settting 4 (Here will be placed Top Scores Table)
-          </p>
+          <p className="Settings-Title">Leaderboard</p>
+          <div className="Buttons">
+            <img
+              className="Leaderboard-Button"
+              src={'/img/trophy.png'}
+              alt="Leaderboard Button"
+              onClick={toggleLeaderBoard}
+            ></img>
+            <button
+              className="Add-Record-Button"
+              /* TODO: ADD functionality */
+              // onClick={() => toggleLeaderBoard()}
+            >
+              Add new record
+            </button>
+          </div>
         </div>
       </div>
     </div>
