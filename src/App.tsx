@@ -16,9 +16,11 @@ import ScorePanel from './components/ScorePanel/ScorePanel';
 import BurgerSettingsMenu from './components/BurgerMenu/BurgerSettingsMenu';
 import Card from './components/Card/Card';
 import './App.scss';
+import LeaderBoard from './components/LeaderBoard/LeaderBoard';
 
 const App = () => {
-  const { mode, difficulty, isSounds } = useContext(GameContext);
+  const { mode, difficulty, isSounds, isLeaderBoardVisible } =
+    useContext(GameContext);
   const getCardsAmount = (columns: number, rows: number) =>
     (columns * rows) / 2;
 
@@ -130,7 +132,7 @@ const App = () => {
   const [isStopwatchStarted, setIsStopwatchStarted] = useState(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-  const [showMobileWarning, setShowMobileWarning] = useState(false);
+  const [showMobileWarning, setShowMobileWarning] = useState<boolean>(false);
 
   // Reference for audio component
   const audioPlayer = useRef<HTMLAudioElement>(null);
@@ -391,6 +393,9 @@ const App = () => {
             </button>
           </header>
           <div className="Game-Info-Panel">
+            {isLeaderBoardVisible && (
+              <LeaderBoard difficulty={getCurrentDifficulty()}></LeaderBoard>
+            )}
             <ScorePanel
               mode={mode}
               modsParameters={modsParameters}

@@ -32,10 +32,18 @@
 
   .Sounds-Button,
   .Music-Button,
-  .Settings-Button {
+  .Settings-Button,
+  .Leaderboard-Button {
     width: calc(25px + 1vmin);
     height: calc(25px + 1vmin);
     padding: 1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .Sounds-Button:hover,
+  .Music-Button:hover,
+  .Leaderboard-Button:hover {
+    transform: translateY(-5px);
   }
 
   .Settings-Button {
@@ -110,6 +118,32 @@
         visibility: visible;
         opacity: 1;
       }
+    }
+  }
+
+  .Buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .Add-Record-Button {
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-family: 'MedievalSharp', cursive;
+      border-radius: 10px;
+      padding: 0.5rem 2rem;
+      font-weight: 600;
+      margin: 1rem 0;
+      border: 1px solid #d279e3;
+      background-color: transparent;
+      color: #d279e3;
+      transition: all 0.3s ease;
+    }
+
+    .Add-Record-Button:hover {
+      background-color: #d279e3;
+      color: #150b14;
     }
   }
 }
