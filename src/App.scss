@@ -102,6 +102,32 @@ body {
   }
 }
 
+/*
+* Custom scrollbar
+*/
+
+/* Width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(210, 121, 227, 0.15);
+  border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #d279e3;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #9858a5;
+}
+
 @media (min-width: 1200px) {
   .App .Game-Canvas .Cards-Grid {
     grid-gap: 2rem;

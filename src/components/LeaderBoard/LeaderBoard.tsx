@@ -42,7 +42,7 @@ const LeaderBoard = (props: { difficulty: string }) => {
   // Function for displaying data in a table depending on the active tab
   const renderTable = () => {
     return (
-      <table>
+      <table className="LeaderboardData">
         <thead>
           <tr>
             <th>Rank</th>
@@ -54,7 +54,7 @@ const LeaderBoard = (props: { difficulty: string }) => {
           </tr>
         </thead>
         <tbody>
-          {scores &&
+          {scores.length ? (
             scores.map((score, index) => (
               <tr key={index}>
                 <td>{score.rank}</td>
@@ -64,7 +64,14 @@ const LeaderBoard = (props: { difficulty: string }) => {
                 <td>{score.time}</td>
                 <td>{score.mode}</td>
               </tr>
-            ))}
+            ))
+          ) : (
+            <tr>
+              <td colSpan={6} className="NoData">
+                No data yet
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     );
@@ -107,7 +114,7 @@ const LeaderBoard = (props: { difficulty: string }) => {
                 data-close
                 onClick={() => toggleLeaderBoard()}
               >
-                <span aria-hidden="true">X</span>
+                <span aria-hidden="true">X{/* ✖ */}</span>
               </button>
             </div>
           </div>
