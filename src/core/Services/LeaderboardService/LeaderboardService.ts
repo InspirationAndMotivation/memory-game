@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/scores';
+const API_URL = '/api/scores';
 
 export const getScores = async (difficulty: string) => {
   try {
@@ -12,15 +12,18 @@ export const getScores = async (difficulty: string) => {
   }
 };
 
-export const addScore = async (name: string, score: number) => {
+export const addScore = async (payload: {
+  name: string;
+  score: number;
+  turns: number;
+  time: string;
+  mode: string;
+  difficulty: string;
+}) => {
   const response = await fetch(API_URL, {
     method: 'POST',
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ name, score }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
   });
   return response.json();
 };

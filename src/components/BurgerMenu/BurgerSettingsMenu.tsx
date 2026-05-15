@@ -12,8 +12,9 @@ const BurgerSettingsMenu = (props: {
   open: boolean;
   setOpen: any;
   audioRef: RefObject<HTMLAudioElement>;
+  onAddRecord: () => void;
 }) => {
-  const { open, setOpen, audioRef } = props;
+  const { open, setOpen, audioRef, onAddRecord } = props;
   const {
     mode,
     setCasualMode,
@@ -252,8 +253,7 @@ const BurgerSettingsMenu = (props: {
             ></img>
             <button
               className="Add-Record-Button"
-              /* TODO: ADD functionality */
-              // onClick={() => toggleLeaderBoard()}
+              onClick={onAddRecord}
             >
               Add new record
             </button>
