@@ -1,0 +1,153 @@
+.SaveScoreModal {
+  .Modal-Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Modal-Container {
+    width: min(420px, 90vw);
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.4);
+    background-color: #150b14;
+    border: 1px solid #d279e3;
+  }
+
+  .Modal-Title {
+    text-align: center;
+    color: #d279e3;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 1.6rem;
+    margin: 0 0 20px 0;
+  }
+
+  .Stats-Summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .Stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    &:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .Stat-Label {
+    font-size: 0.75rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .Stat-Value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+
+    &.Score {
+      color: #d279e3;
+      font-size: 1.4rem;
+    }
+  }
+
+  .Name-Input-Group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    label {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    input {
+      font-family: 'MedievalSharp', cursive;
+      font-size: 1rem;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #d279e3;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &::placeholder {
+        color: #666;
+      }
+
+      &:focus {
+        border-color: #e89ff0;
+        background: rgba(255, 255, 255, 0.12);
+      }
+    }
+  }
+
+  .Error-Message {
+    color: #f06060;
+    font-size: 0.85rem;
+    margin: 0 0 12px 0;
+    text-align: center;
+  }
+
+  .Modal-Buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+
+    button {
+      cursor: pointer;
+      font-family: 'MedievalSharp', cursive;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 10px 28px;
+      border-radius: 10px;
+      border: 1px solid #d279e3;
+      transition: all 0.25s ease;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    .Save-Button {
+      background-color: #d279e3;
+      color: #150b14;
+
+      &:hover:not(:disabled) {
+        background-color: #e89ff0;
+        border-color: #e89ff0;
+      }
+    }
+
+    .Cancel-Button {
+      background-color: transparent;
+      color: #d279e3;
+
+      &:hover:not(:disabled) {
+        background-color: #d279e3;
+        color: #150b14;
+      }
+    }
+  }
+}

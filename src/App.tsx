@@ -17,6 +17,7 @@ import BurgerSettingsMenu from './components/BurgerMenu/BurgerSettingsMenu';
 import Card from './components/Card/Card';
 import './App.scss';
 import LeaderBoard from './components/LeaderBoard/LeaderBoard';
+import SaveScoreModal from './components/SaveScoreModal/SaveScoreModal';
 
 const App = () => {
   const { mode, difficulty, isSounds, isLeaderBoardVisible } =
@@ -131,6 +132,7 @@ const App = () => {
   const [time, setTime] = useState<number>(0);
   const [isStopwatchStarted, setIsStopwatchStarted] = useState(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isSaveScoreVisible, setIsSaveScoreVisible] = useState(false);
 
   const [showMobileWarning, setShowMobileWarning] = useState<boolean>(false);
 
@@ -197,6 +199,7 @@ const App = () => {
     setIsStopwatchStarted(false);
     setMatchedPairs(0);
     setIsDisabled(false);
+    setIsSaveScoreVisible(false);
   };
 
   // Start a game and shuffle cards
@@ -330,6 +333,7 @@ const App = () => {
           }),
         400
       );
+      setTimeout(() => setIsSaveScoreVisible(true), 1000);
     } else console.log('New game started!');
     // eslint-disable-next-line
   }, [win]);
@@ -396,6 +400,19 @@ const App = () => {
             {isLeaderBoardVisible && (
               <LeaderBoard difficulty={getCurrentDifficulty()}></LeaderBoard>
             )}
+            {isSaveScoreVisible && (
+              <SaveScoreModal
+                turns={turns}
+                time={time}
+                mode={mode.name}
+                difficulty={getCurrentDifficulty()}
+                modsParameters={modsParameters}
+                onClose={() => setIsSaveScoreVisible(false)}
+                onSaved={() => {
+                  setIsSaveScoreVisible(false);
+                }}
+              />
+            )}
             <ScorePanel
               mode={mode}
               modsParameters={modsParameters}
@@ -439,6 +456,7 @@ const App = () => {
             open={open}
             setOpen={setOpen}
             audioRef={audioPlayer as RefObject<HTMLAudioElement>}
+            onAddRecord={() => setIsSaveScoreVisible(true)}
           />
         </>
       )}
