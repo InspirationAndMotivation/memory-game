@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { play } from './core/Services/SoundsService/SoundsService';
 import { ICard } from './interfaces/ICard';
-import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+import confetti from 'canvas-confetti';
 import GameContext from './core/Contexts/GameContext';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import ScorePanel from './components/ScorePanel/ScorePanel';
@@ -122,7 +122,7 @@ const App = () => {
   const [lose, setLose] = useState<boolean>(false);
   const [cards, setCards] = useState<ICard[]>([]);
   const [cardsAmount, setCardsAmount] = useState<number>(
-    getCardsAmount(difficulty.columnsNum, difficulty.rowsNum)
+    getCardsAmount(difficulty.columnsNum, difficulty.rowsNum),
   );
   const [firstChoice, setFirstChoice] = useState<ICard | null>(null);
   const [secondChoice, setSecondChoice] = useState<ICard | null>(null);
@@ -162,8 +162,8 @@ const App = () => {
       difficulty.name === 'easy'
         ? 'easy'
         : difficulty.name === 'normal'
-        ? 'normal'
-        : 'hard';
+          ? 'normal'
+          : 'hard';
     return currentDifficulty;
   };
 
@@ -328,7 +328,7 @@ const App = () => {
             particleCount: 120,
             spread: width / 10, // Spread 160 is perfect, but as for me - too big angle for mobile view
           }),
-        400
+        400,
       );
     } else console.log('New game started!');
     // eslint-disable-next-line
@@ -351,7 +351,7 @@ const App = () => {
             particleCount: 120,
             spread: width / 10, // Spread 160 is perfect, but as for me - too big angle for mobile view
           }),
-        400
+        400,
       );
     } else console.log('New game started!');
     // eslint-disable-next-line
@@ -415,8 +415,8 @@ const App = () => {
                 difficulty.name === 'hard'
                   ? 'Hard'
                   : difficulty.name === 'normal'
-                  ? 'Normal'
-                  : 'Easy'
+                    ? 'Normal'
+                    : 'Easy'
               }`}
             >
               {cards &&
